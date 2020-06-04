@@ -89,9 +89,11 @@ public class DefaultWishingDataService implements WishingDataService {
 		Wish aWish = Wish.anniversaryWish();
 		aWish.setName(wishData.getName());
 		aWish.setEmail(wishData.getEmail());
-		aWish.setWishDate(wishData.getHireDate());
+		aWish.setEventDate(wishData.getHireDate());
 		aWish.setWish("Happy Work Anniversary!");
 		aWish.setDetail("");
+		LocalDate now = LocalDate.now();
+		aWish.setWishDate(LocalDate.of(now.getYear(), wishData.getHireDate().getMonth(), wishData.getHireDate().getDayOfMonth()));
 		return aWish;
 	}
 
@@ -99,9 +101,11 @@ public class DefaultWishingDataService implements WishingDataService {
 		Wish bWish = Wish.birthdayWish();
 		bWish.setName(wishData.getName());
 		bWish.setEmail(wishData.getEmail());
-		bWish.setWishDate(wishData.getBirthDate());
+		bWish.setEventDate(wishData.getBirthDate());
 		bWish.setWish("Happy Birthday!");
 		bWish.setDetail("");
+		LocalDate now = LocalDate.now();
+		bWish.setWishDate(LocalDate.of(now.getYear(), wishData.getBirthDate().getMonth(), wishData.getBirthDate().getDayOfMonth()));
 		return bWish;
 	}
 

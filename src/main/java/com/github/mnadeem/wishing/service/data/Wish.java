@@ -8,6 +8,7 @@ public class Wish  {
 	private String email;
 	private String wish;
 	private LocalDate wishDate;
+	private LocalDate eventDate;
 	private String detail;
 	private WishType wishType;
 
@@ -26,8 +27,9 @@ public class Wish  {
 	public boolean isBirthday() {
 		return WishType.BIRTHDAY == getWishType();
 	}
+
 	public int getYears() {
-		return Period.between(wishDate, LocalDate.now()).getYears();
+		return Period.between(eventDate, wishDate).getYears();
 	}
 
 	public String getYearsMessage() {
@@ -44,6 +46,11 @@ public class Wish  {
 
 	public void setWish(String wish) {
 		this.wish = wish;
+	}
+	
+	
+	public void setEventDate(LocalDate eventDate) {
+		this.eventDate = eventDate;
 	}
 
 	public void setWishDate(LocalDate wishDate) {
@@ -84,9 +91,11 @@ public class Wish  {
 
 	@Override
 	public String toString() {
-		return "Wish [name=" + name + ", email=" + email + ", wish=" + wish + ", wishDate=" + wishDate
-				+ ", detail=" + detail + "]";
+		return "Wish [name=" + name + ", email=" + email + ", wish=" + wish + ", wishDate=" + wishDate + ", eventDate="
+				+ eventDate + ", wishType=" + wishType + "]";
 	}
+
+
 
 	public enum WishType {
 		BIRTHDAY, ANNIVERSARY;
