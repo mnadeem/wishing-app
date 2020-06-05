@@ -35,6 +35,18 @@ Look for an example in application.properties
 ## SMTP Configurations
 Look for an example in application.properties
 
+```
+spring.mail.default-encoding=UTF-8
+spring.mail.host=smtp.gmail.com
+spring.mail.username=YourEmail@gmail.com
+spring.mail.password=GmailPAssword
+spring.mail.port=587
+spring.mail.protocol=smtp
+spring.mail.test-connection=false
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+```
+
 # Running
 
 ## Eclipse
