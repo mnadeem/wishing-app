@@ -8,6 +8,7 @@ public class WishData {
 	private LocalDate birthDate;
 	private String email;
 	private String name;
+	private int partition;
 
 	public LocalDate getHireDate() {
 		return hireDate;
@@ -34,6 +35,13 @@ public class WishData {
 		this.name = name;
 	}
 
+	public int getPartition() {
+		return partition;
+	}
+	public void setPartition(int partition) {
+		this.partition = partition;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -58,9 +66,11 @@ public class WishData {
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
 		return "WishData [hireDate=" + hireDate + ", birthDate=" + birthDate + ", email=" + email + ", name=" + name
-				+ "]";
+				+ ", partition=" + partition + "]";
 	}
+	
 }

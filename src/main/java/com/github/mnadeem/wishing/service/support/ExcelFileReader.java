@@ -64,7 +64,7 @@ public class ExcelFileReader {
 		wishData.setEmail(String.valueOf(getCellValue(row.getCell(excelFile.getEmailIndex()))));
 		wishData.setBirthDate(getLocalDate(getCellValue(row.getCell(excelFile.getDobIndex()))));
 		wishData.setHireDate(getLocalDate(getCellValue(row.getCell(excelFile.getHireIndex()))));
-
+		wishData.setPartition(excelFile.getWorkbookNumber());
 		return wishData;
 	}
 

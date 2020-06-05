@@ -10,6 +10,7 @@ public class Wish  {
 	private LocalDate eventDate;
 	private String detail;
 	private WishType wishType;
+	private int partition;
 
 	private Wish(WishType wishType) {
 		this.wishType = wishType;
@@ -87,6 +88,14 @@ public class Wish  {
 	
 	public WishKey getWishKey() {
 		return new WishKey(eventDate.getMonthValue(), eventDate.getDayOfMonth());
+	}
+
+	public int getPartition() {
+		return partition;
+	}
+
+	public void setPartition(int partition) {
+		this.partition = partition;
 	}
 
 	@Override

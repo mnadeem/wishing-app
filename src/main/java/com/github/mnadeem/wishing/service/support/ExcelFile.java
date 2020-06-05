@@ -8,6 +8,7 @@ public class ExcelFile {
 	private int dobIndex;
 	private int hireIndex;
 	private int sheetNumber;
+	private int workbookNumber;
 
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
@@ -55,6 +56,14 @@ public class ExcelFile {
 
 	public void setSheetNumber(int sheetNumber) {
 		this.sheetNumber = sheetNumber;
+	}
+
+	public int getWorkbookNumber() {
+		return workbookNumber;
+	}
+
+	public void setWorkbookNumber(int workbookNumber) {
+		this.workbookNumber = workbookNumber;
 	}
 
 	@Override

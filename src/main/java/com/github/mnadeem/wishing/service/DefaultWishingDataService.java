@@ -52,12 +52,13 @@ public class DefaultWishingDataService implements WishingDataService {
 
 	private ExcelFile buildExcelFile(int i) {
 
-		String fileName = env.<String>getProperty("app.name" + i + "excel_file", String.class, "data/workbook1.xlsx");
-		int nameIndex = env.<Integer>getProperty("app.name" + i + "column", Integer.class, 1);
-		int emailIndex = env.<Integer>getProperty("app.email" + i + "column", Integer.class, 2);
-		int dobIndex = env.<Integer>getProperty("app.dob" + i + "column", Integer.class, 3);
-		int hireIndex = env.<Integer>getProperty("app.hire" + i + "column", Integer.class, 4);
-		int sheetNumber = env.<Integer>getProperty("app.number" + i + "excel_sheets", Integer.class, 1);
+		String fileName = env.<String>getProperty("app.name" + i + ".excel_file", String.class, "data/workbook1.xlsx");
+
+		int nameIndex = env.<Integer>getProperty("app.name" + i + ".column", Integer.class, 1);
+		int emailIndex = env.<Integer>getProperty("app.email" + i + ".column", Integer.class, 2);
+		int dobIndex = env.<Integer>getProperty("app.dob" + i + ".column", Integer.class, 3);
+		int hireIndex = env.<Integer>getProperty("app.hire" + i + ".column", Integer.class, 4);
+		int sheetNumber = env.<Integer>getProperty("app.number" + i + ".excel_sheet", Integer.class, 1);
 
 		ExcelFile file = new ExcelFile();
 		file.setFileName(fileName);
@@ -66,7 +67,7 @@ public class DefaultWishingDataService implements WishingDataService {
 		file.setDobIndex(dobIndex - 1);
 		file.setHireIndex(hireIndex - 1);
 		file.setSheetNumber(sheetNumber - 1);
-
+		file.setWorkbookNumber(i);
 		return file;
 	}
 
@@ -90,6 +91,7 @@ public class DefaultWishingDataService implements WishingDataService {
 		aWish.setName(wishData.getName());
 		aWish.setEmail(wishData.getEmail());
 		aWish.setEventDate(wishData.getHireDate());
+		aWish.setPartition(wishData.getPartition());
 		aWish.setWish("Happy Work Anniversary!");
 		aWish.setDetail("");
 		return aWish;
@@ -100,6 +102,7 @@ public class DefaultWishingDataService implements WishingDataService {
 		bWish.setName(wishData.getName());
 		bWish.setEmail(wishData.getEmail());
 		bWish.setEventDate(wishData.getBirthDate());
+		bWish.setPartition(wishData.getPartition());
 		bWish.setWish("Happy Birthday!");
 		bWish.setDetail("");
 		return bWish;

@@ -37,7 +37,6 @@ public class WishingJob {
 		logger.debug("Job finished for {}", now);
 	}
 
-
 	private void sendEmail(Wish wish) {
 		if (wish.shouldWish()) {
 			try {
@@ -51,12 +50,15 @@ public class WishingJob {
 	}
 
 	private Mail buildMail(Wish wish) {
+		String from = env.<String>getProperty("app.name" + wish.getPartition() + ".from", String.class, "donotreply@nowhere.com");
+		String cc = env.<String>getProperty("app.name" + wish.getPartition() + ".cc", String.class, "");
 		Mail mail = new Mail();
 		mail.setTo(wish.getEmail());
-		mail.setFrom("donotreply@nowhere.com");
+		mail.setFrom(from);
 		mail.setSubject(buildSubject(wish));
 		mail.setContent(buildContent(wish));
 		mail.setImage(buildImage(wish));
+		mail.setCc(cc);
 		return mail;
 	}
 

@@ -1,5 +1,7 @@
 package com.github.mnadeem.wishing.service.data;
 
+import org.springframework.util.StringUtils;
+
 public class Mail {
 
     private String from;
@@ -57,8 +59,13 @@ public class Mail {
 		return cc;
 	}
 
-	public void setCc(String[] cc) {
-		this.cc = cc;
+	public void setCc(String cc) {
+		if (StringUtils.hasText(cc)) {
+			String[] result = cc.split(",");
+			if (result !=null && result.length > 0) {
+				this.cc = result;
+			}
+		}
 	}
 
 	@Override
