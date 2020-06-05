@@ -62,9 +62,14 @@ public class ExcelFileReader {
 
 		wishData.setName(String.valueOf(getCellValue(row.getCell(excelFile.getNameIndex()))));
 		wishData.setEmail(String.valueOf(getCellValue(row.getCell(excelFile.getEmailIndex()))));
-		wishData.setBirthDate(getLocalDate(getCellValue(row.getCell(excelFile.getDobIndex()))));
-		wishData.setHireDate(getLocalDate(getCellValue(row.getCell(excelFile.getHireIndex()))));
 		wishData.setPartition(excelFile.getWorkbookNumber());
+		if (excelFile.getDobIndex() != null) {			
+			wishData.setBirthDate(getLocalDate(getCellValue(row.getCell(excelFile.getDobIndex()))));
+		}
+		if (excelFile.getHireIndex() != null) {			
+			wishData.setHireDate(getLocalDate(getCellValue(row.getCell(excelFile.getHireIndex()))));
+		}
+		
 		return wishData;
 	}
 

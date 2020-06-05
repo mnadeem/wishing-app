@@ -54,10 +54,10 @@ public class DefaultWishingDataService implements WishingDataService {
 
 		String fileName = env.<String>getProperty("app.name" + i + ".excel_file", String.class, "data/workbook1.xlsx");
 
-		int nameIndex = env.<Integer>getProperty("app.name" + i + ".column", Integer.class, 1);
-		int emailIndex = env.<Integer>getProperty("app.email" + i + ".column", Integer.class, 2);
-		int dobIndex = env.<Integer>getProperty("app.dob" + i + ".column", Integer.class, 3);
-		int hireIndex = env.<Integer>getProperty("app.hire" + i + ".column", Integer.class, 4);
+		int nameIndex = env.<Integer>getProperty("app.name" + i + ".column", Integer.class);
+		int emailIndex = env.<Integer>getProperty("app.email" + i + ".column", Integer.class);
+		int dobIndex = env.<Integer>getProperty("app.dob" + i + ".column", Integer.class);
+		int hireIndex = env.<Integer>getProperty("app.hire" + i + ".column", Integer.class);
 		int sheetNumber = env.<Integer>getProperty("app.number" + i + ".excel_sheet", Integer.class, 1);
 
 		ExcelFile file = new ExcelFile();

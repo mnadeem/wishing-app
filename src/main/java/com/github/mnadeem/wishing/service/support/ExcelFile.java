@@ -5,8 +5,8 @@ public class ExcelFile {
 	private String fileName;
 	private int nameIndex;
 	private int emailIndex;
-	private int dobIndex;
-	private int hireIndex;
+	private Integer dobIndex;
+	private Integer hireIndex;
 	private int sheetNumber;
 	private int workbookNumber;
 
@@ -22,11 +22,11 @@ public class ExcelFile {
 		this.emailIndex = emailIndex;
 	}
 
-	public void setDobIndex(int dobIndex) {
+	public void setDobIndex(Integer dobIndex) {
 		this.dobIndex = dobIndex;
 	}
 
-	public void setHireIndex(int hireIndex) {
+	public void setHireIndex(Integer hireIndex) {
 		this.hireIndex = hireIndex;
 	}
 
@@ -38,11 +38,11 @@ public class ExcelFile {
 		return emailIndex;
 	}
 
-	public int getDobIndex() {
+	public Integer getDobIndex() {
 		return dobIndex;
 	}
 
-	public int getHireIndex() {
+	public Integer getHireIndex() {
 		return hireIndex;
 	}
 
