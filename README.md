@@ -1,5 +1,5 @@
 # Wishing Application
-Application to send birthday and anniversary wish emails
+Application to send birthday and anniversary wish emails elegantly.
 
 ## Why
 
@@ -18,7 +18,7 @@ Application to send birthday and anniversary wish emails
 # Prerequisites
 * Java 8
 * Maven 3
-* Docker if your deploying this app to Docker
+* Docker if you are deploying this app to Docker
 * Excel Reports with **name**, **email**, **dob** and **hire date** columns
 
 # Getting Started
