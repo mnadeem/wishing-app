@@ -23,11 +23,17 @@ There are three types of configurations
 * SMTP Configurations:
 
 ## Workbook Configuration
-![](docs/1.png)
+Look for an example in application.properties
+
+![](docs/workbook_configurations.png)
 
 ## Image Configurations
+Look for an example in application.properties
+
+![](docs/image_configurations.png)
 
 ## SMTP Configurations
+Look for an example in application.properties
 
 # Running
 
