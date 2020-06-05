@@ -1,6 +1,16 @@
 # wishing-app
 Application to send birthday and anniversary wish emails
 
+## Why
+
+1. Does it job (Sending Birthday and anniversary email wishes) very elegantly
+2. Highly Configurable : Load multiple workbooks, specify columns to load, different email details (from, cc) for each workbook, supports multiple LOBs within org
+3. Randomly choose images from different buckets (birthday and anniversary, anniversary duration)
+4. Support multiple SMTP servers: Gmail, hotmail, yahoo even corporate
+5. Run anywhere in local and in cloud, as docker container or as plain app
+
+
+## Configuration
 
 ## Docker
 
@@ -91,8 +101,24 @@ Stop the container
 
 ```Powershell
 E:\githubRepos\wishing-app>mvn docker:stop
+[INFO] Scanning for projects...
+[INFO]
+[INFO] -------------------< com.github.mnadeem:wishing-app >-------------------
+[INFO] Building wishing-app 0.0.1-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- docker-maven-plugin:0.33.0:stop (default-cli) @ wishing-app ---
+[INFO] DOCKER> [docker.io/mnadeem/wishing-app:latest]: Stop and removed container 98651db65ded after 0 ms
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  05:01 min
+[INFO] Finished at: 2020-06-05T08:51:44+05:30
+[INFO] ------------------------------------------------------------------------
 
 ```
+
+Refer [fabric8 home](http://dmp.fabric8.io/) for details on commands
 
 ```Powershell
 
