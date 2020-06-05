@@ -23,7 +23,7 @@ Application to send birthday and anniversary wish emails elegantly.
 
 # Getting Started
 
-### Step 1 : Clone and Download the project
+#### Step 1 : Clone and Download the project
 
 ![](docs/download.png)
 
@@ -66,14 +66,14 @@ Column level keys in a given sheet
 
 **Note** : Email and date (Either dob or hire date) combination uniquely identify a wish.
 
-#### Various Options
+## Various Options
 
 1. We can load birthday report (name, email, dob) and anniversary (name, email, hire) report in separate excel files
 2. We can load birthday report from sheet x and anniversary report from sheet y of same excel file
 3. we can load an excel file having both birthday and anniversary data in same sheet (name, email, dob, hire).
 4. We can load any combination of above.
 
-* `` :
+
 
 
 
