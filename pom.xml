@@ -17,6 +17,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<poi.vesion>4.1.2</poi.vesion>
+		<plugin.jib-maven-plugin>2.3.0</plugin.jib-maven-plugin>
 	</properties>
 
 	<dependencies>
@@ -59,6 +60,40 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			
+            <plugin>
+			    <groupId>io.fabric8</groupId>
+			    <artifactId>docker-maven-plugin</artifactId>
+			    <version>0.33.0</version>
+			    <executions>
+			        <execution>
+			            <id>start</id>
+			            <phase>pre-integration-test</phase>
+			            <goals>
+			                <goal>build</goal>
+			                <goal>start</goal>
+			            </goals>
+			        </execution>
+			        <execution>
+			            <id>stop</id>
+			            <phase>post-integration-test</phase>
+			            <goals>
+			                <goal>stop</goal>
+			            </goals>
+			        </execution>
+			    </executions>
+			
+			    <configuration>
+			        <images>
+			            <image> 
+			                <name>docker.io/mnadeem/wishing-app</name> 			
+			                <build>
+			                    <dockerFile>${project.basedir}/Dockerfile</dockerFile >
+			                </build>
+			            </image>			
+			        </images>
+			    </configuration>
 			</plugin>
 		</plugins>
 	</build>
