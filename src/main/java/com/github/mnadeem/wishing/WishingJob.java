@@ -38,15 +38,29 @@ public class WishingJob {
 	}
 
 	private void sendEmail(Wish wish) {
-		if (wish.shouldWish()) {
+		if (wish.shouldWish() && isEnabled(wish)) {
+
 			try {
 				this.emailService.send(buildMail(wish));
 			} catch (MessagingException e) {
 				logger.error("Error Sending message", e);
 			}
+
 		} else {
-			logger.debug("Wish not applicable {}" , wish);
+			logger.debug("Wish not applicable / enabled {}", wish);
 		}
+	}
+
+	private boolean isEnabled(Wish wish) {
+		StringBuilder key = new StringBuilder();
+		key.append("app.mailer.");
+		if (wish.isBirthday()) {
+			key.append("birthday");
+		} else {
+			key.append("anniversary");
+		}
+		key.append(".enabled");
+		return env.<Boolean>getProperty(key.toString(), Boolean.class, Boolean.TRUE);
 	}
 
 	private Mail buildMail(Wish wish) {
