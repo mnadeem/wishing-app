@@ -27,7 +27,7 @@ import com.github.mnadeem.wishing.service.support.WishData;
 public class DefaultWishingDataService implements WishingDataService {
 	
 	private static Logger logger = LoggerFactory.getLogger(DefaultWishingDataService.class);
-	
+
 	@Autowired
 	private Environment env;
 	@Autowired
@@ -79,9 +79,12 @@ public class DefaultWishingDataService implements WishingDataService {
 
 	private List<Wish> buildWishes(WishData wishData) {
 		List<Wish> wishes = new ArrayList<Wish>();
-
-		wishes.add(buildBirthdayWish(wishData));		
-		wishes.add(buildAnniversaryWish(wishData));
+		if (wishData.getBirthDate() != null) {			
+			wishes.add(buildBirthdayWish(wishData));		
+		}
+		if (wishData.getHireDate() != null) {			
+			wishes.add(buildAnniversaryWish(wishData));
+		}
 
 		return wishes;
 	}
