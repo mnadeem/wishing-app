@@ -56,16 +56,20 @@ public class DefaultWishingDataService implements WishingDataService {
 
 		int nameIndex = env.<Integer>getProperty("app.name" + i + ".column", Integer.class);
 		int emailIndex = env.<Integer>getProperty("app.email" + i + ".column", Integer.class);
-		int dobIndex = env.<Integer>getProperty("app.dob" + i + ".column", Integer.class);
-		int hireIndex = env.<Integer>getProperty("app.hire" + i + ".column", Integer.class);
+		Integer dobIndex = env.<Integer>getProperty("app.dob" + i + ".column", Integer.class);
+		Integer hireIndex = env.<Integer>getProperty("app.hire" + i + ".column", Integer.class);
 		int sheetNumber = env.<Integer>getProperty("app.number" + i + ".excel_sheet", Integer.class, 1);
 
 		ExcelFile file = new ExcelFile();
 		file.setFileName(fileName);
 		file.setNameIndex(nameIndex - 1);
 		file.setEmailIndex(emailIndex - 1);
-		file.setDobIndex(dobIndex - 1);
-		file.setHireIndex(hireIndex - 1);
+		if (dobIndex !=null) {			
+			file.setDobIndex(dobIndex - 1);
+		}
+		if (hireIndex != null) {			
+			file.setHireIndex(hireIndex - 1);
+		}
 		file.setSheetNumber(sheetNumber - 1);
 		file.setWorkbookNumber(i);
 		return file;
