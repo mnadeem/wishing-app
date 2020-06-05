@@ -1,4 +1,4 @@
-# wishing-app
+# Wishing Application
 Application to send birthday and anniversary wish emails
 
 ## Why
@@ -8,9 +8,25 @@ Application to send birthday and anniversary wish emails
 3. Randomly choose images from different buckets (birthday and anniversary, anniversary duration)
 4. Support multiple SMTP servers: Gmail, hotmail, yahoo even corporate
 5. Run anywhere in local and in cloud, as docker container or as plain app
+6. Low footprint does not require database, S3, Nas storage or Web server
+7. Good Coding practices have been followed to allow for extension easily
+8. Sufficient document to kick started easily
+9. Download Configure and Run
+
+# Configuration
+
+# Running
+
+## Eclipse
+
+Right click on ``com.github.nadeem.BootAppApplication`` ==> **Run as** ==> **Java Application**
 
 
-## Configuration
+## Spring Boot Command Line
+
+```Powershell
+mvn package spring-boot:run
+```
 
 ## Docker
 
