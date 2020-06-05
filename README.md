@@ -15,6 +15,12 @@ Application to send birthday and anniversary wish emails
 10. Configure When the job runs
 11. Different ways of loading workbook
 
+# Prerequisites
+* Java 8
+* Maven 3
+* Docker if your deploying this app to Docker
+* Excel Reports with **name**, **email**, **dob** and **hire date** columns
+
 # Getting Started
 
 ### Step 1 : Clone and Download the project
@@ -37,26 +43,23 @@ Basically you have to update `src/main/resources/applicaion.properties` file for
 * SMTP detail : Default have been provided for gmail
 
 #### Step 4 : Run the project
+Look at Running section below for more details.
 
 # Configuration
 
 There are three types of configurations
 
-* Workbook Configuration:
-* Image Configurations:
-* SMTP Configurations:
-
-## Workbook Configuration
+### Workbook Configuration
 Look for an example in application.properties
 
 ![](docs/workbook_configurations.png)
 
-## Image Configurations
+### Image Configurations
 Look for an example in application.properties
 
 ![](docs/image_configurations.png)
 
-## SMTP Configurations
+### SMTP Configurations
 Look for an example in application.properties
 
 ```
