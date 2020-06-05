@@ -31,24 +31,22 @@ public class WishingJob {
 
 	@Scheduled(cron = "${app.schedule.corn}")
 	public void job() throws Exception {
-		LocalDate now = now();
+		LocalDate now = LocalDate.now();
 		logger.debug("Job running for {}", now);
-		dataService.forEach(now, this::sendEmail);
+		dataService.forEach(LocalDate.now(), this::sendEmail);
 		logger.debug("Job finished for {}", now);
 	}
 
-	private LocalDate now() {
-		LocalDate now = LocalDate.now();
-		LocalDate date = LocalDate.of(now.getYear(), now.getMonth(), now.getDayOfMonth());
-		return date;
-	}
 
 	private void sendEmail(Wish wish) {
-
-		try {
-			this.emailService.send(buildMail(wish));
-		} catch (MessagingException e) {
-			logger.error("Error Sending message", e);
+		if (wish.shouldWish()) {
+			try {
+				this.emailService.send(buildMail(wish));
+			} catch (MessagingException e) {
+				logger.error("Error Sending message", e);
+			}
+		} else {
+			logger.debug("Wish not applicable {}" , wish);
 		}
 	}
 

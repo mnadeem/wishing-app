@@ -17,6 +17,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
 import com.github.mnadeem.wishing.service.data.Wish;
+import com.github.mnadeem.wishing.service.data.Wish.WishKey;
 import com.github.mnadeem.wishing.service.support.ExcelFile;
 import com.github.mnadeem.wishing.service.support.ExcelFileReader;
 import com.github.mnadeem.wishing.service.support.ExcelFiles;
@@ -32,12 +33,11 @@ public class DefaultWishingDataService implements WishingDataService {
 	@Autowired
 	private ResourceLoader resourceLoader;
 
-	private MultiValuedMap<LocalDate, Wish> data = new HashSetValuedHashMap<LocalDate, Wish>();
+	private MultiValuedMap<WishKey, Wish> data = new HashSetValuedHashMap<WishKey, Wish>();
 
 	@PostConstruct
     public void init() {
 		new ExcelFileReader(resourceLoader, buildExcelFiles()).forEach(wishData -> add(wishData));
-		System.out.println(data);
     }
 
 	private ExcelFiles buildExcelFiles() {
@@ -73,7 +73,7 @@ public class DefaultWishingDataService implements WishingDataService {
 	@Override
 	public void add(WishData wishData) {
 		List<Wish> wishes = buildWishes(wishData);
-		wishes.forEach(wish -> data.put(wish.getWishDate(), wish));
+		wishes.forEach(wish -> data.put(wish.getWishKey(), wish));
 	}
 
 	private List<Wish> buildWishes(WishData wishData) {
@@ -92,8 +92,6 @@ public class DefaultWishingDataService implements WishingDataService {
 		aWish.setEventDate(wishData.getHireDate());
 		aWish.setWish("Happy Work Anniversary!");
 		aWish.setDetail("");
-		LocalDate now = LocalDate.now();
-		aWish.setWishDate(LocalDate.of(now.getYear(), wishData.getHireDate().getMonth(), wishData.getHireDate().getDayOfMonth()));
 		return aWish;
 	}
 
@@ -104,13 +102,12 @@ public class DefaultWishingDataService implements WishingDataService {
 		bWish.setEventDate(wishData.getBirthDate());
 		bWish.setWish("Happy Birthday!");
 		bWish.setDetail("");
-		LocalDate now = LocalDate.now();
-		bWish.setWishDate(LocalDate.of(now.getYear(), wishData.getBirthDate().getMonth(), wishData.getBirthDate().getDayOfMonth()));
 		return bWish;
 	}
 
 	@Override
 	public void forEach(LocalDate date, Consumer<Wish> wish) {
-		data.get(date).forEach(wish);
+		WishKey wishKey = new WishKey(date.getMonthValue(), date.getDayOfMonth());
+		data.get(wishKey).forEach(wish);
 	}
 }

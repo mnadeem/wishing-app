@@ -7,7 +7,6 @@ public class Wish  {
 	private String name;
 	private String email;
 	private String wish;
-	private LocalDate wishDate;
 	private LocalDate eventDate;
 	private String detail;
 	private WishType wishType;
@@ -29,7 +28,7 @@ public class Wish  {
 	}
 
 	public int getYears() {
-		return Period.between(eventDate, wishDate).getYears();
+		return Period.between(eventDate, LocalDate.now()).getYears();
 	}
 
 	public String getYearsMessage() {
@@ -39,7 +38,11 @@ public class Wish  {
 		}
 		return message;
 	}
-
+	
+	public boolean shouldWish() {
+		return getYears() > 0;
+	}
+	
 	public WishType getWishType() {
 		return wishType;
 	}
@@ -53,16 +56,9 @@ public class Wish  {
 		this.eventDate = eventDate;
 	}
 
-	public void setWishDate(LocalDate wishDate) {
-		this.wishDate = wishDate;
-	}
 
 	public String getWish() {
 		return wish;
-	}
-
-	public LocalDate getWishDate() {
-		return wishDate;
 	}
 
 	public String getName() {
@@ -88,16 +84,63 @@ public class Wish  {
 	public void setDetail(String detail) {
 		this.detail = detail;
 	}
+	
+	public WishKey getWishKey() {
+		return new WishKey(eventDate.getMonthValue(), eventDate.getDayOfMonth());
+	}
 
 	@Override
 	public String toString() {
-		return "Wish [name=" + name + ", email=" + email + ", wish=" + wish + ", wishDate=" + wishDate + ", eventDate="
+		return "Wish [name=" + name + ", email=" + email + ", wish=" + wish + ", eventDate="
 				+ eventDate + ", wishType=" + wishType + "]";
 	}
 
-
-
 	public enum WishType {
 		BIRTHDAY, ANNIVERSARY;
+	}
+	
+	public static class WishKey {
+		private int month;
+		private int dayOfTheMonth;
+		
+		public WishKey(int month, int dayOfTheMonth) {
+			super();
+			this.month = month;
+			this.dayOfTheMonth = dayOfTheMonth;
+		}
+		public int getMonth() {
+			return month;
+		}
+		public int getDayOfTheMonth() {
+			return dayOfTheMonth;
+		}
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + dayOfTheMonth;
+			result = prime * result + month;
+			return result;
+		}
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			WishKey other = (WishKey) obj;
+			if (dayOfTheMonth != other.dayOfTheMonth)
+				return false;
+			if (month != other.month)
+				return false;
+			return true;
+		}
+		@Override
+		public String toString() {
+			return "WishKey [month=" + month + ", dayOfTheMonth=" + dayOfTheMonth + "]";
+		}
+		
 	}
 }
