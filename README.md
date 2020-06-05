@@ -12,8 +12,22 @@ Application to send birthday and anniversary wish emails
 7. Good Coding practices have been followed to allow for extension easily
 8. Sufficient document to kick started easily
 9. Download Configure and Run
+10. Configure When the job runs
 
 # Configuration
+
+There are three types of configurations
+
+* Workbook Configuration:
+* Image Configurations:
+* SMTP Configurations:
+
+## Workbook Configuration
+![](docs/1.png)
+
+## Image Configurations
+
+## SMTP Configurations
 
 # Running
 
