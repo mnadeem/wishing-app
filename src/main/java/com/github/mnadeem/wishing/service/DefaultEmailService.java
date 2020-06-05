@@ -1,7 +1,6 @@
 package com.github.mnadeem.wishing.service;
 
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -46,7 +45,7 @@ public class DefaultEmailService implements EmailService {
         String inlineImage = "<img src=\"cid:logo.png\"></img><br/>";
 
         helper.setText(inlineImage + mail.getContent(), true);
-        helper.setSubject(mail.getSubject() + LocalDateTime.now());
+        helper.setSubject(mail.getSubject());
         helper.setTo(mail.getTo());
         helper.setFrom(mail.getFrom());
         if (mail.getCc() != null) {			
