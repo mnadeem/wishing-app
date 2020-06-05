@@ -41,9 +41,41 @@ Basically you have to update `src/main/resources/applicaion.properties` file for
 * Birthday image details : Birth images should reside under `src/main/resources/data/images/birthday` , add more images if required incrementally, naming should be 1.png, 2.png, 3.png, 5.png and so on. key `app.birthday.image_count` should reflect how many images are there, randomly images would be picked while sending wish. Refer to configuration section below for more details
 * Anniversary image details : Anniversary images should reside under `src/main/resources/data/images/anniversary` , add more images if required. There are sub folders 1 (one year), 2 (Two years), 3 (Three years) and so on, further there is default folder which is kind of catch all. All these folders should contain images named incrementally 1.png, 2.png, 3.png and so on. `app.anniversary.years_count` controls how many anniversary image folders are provided default is 5. First year anniversary image count is controlled by `app.anniversary.year1.image_coun`, second year anniversary image count is controlled by `app.anniversary.year2.image_coun` similarly third year anniversary image count is controlled by `app.anniversary.year3.image_coun` and so on. Catch all folder image count is controlled by `app.anniversary.default.image_count`. Refer to configuration section below for more details
 * SMTP detail : Default have been provided for gmail
+* Email related keys : `app.name<index>.from` and `app.name<index>.cc` from and cc of email for worksheet `<index>`
 
 #### Step 4 : Run the project
 Look at Running section below for more details.
+
+
+# Loading Workbooks
+
+Excel files to load should be kept under `src/main/resources/data/` as discussed above, there are couple of keys which drive the loading part:
+
+Excel file level keys
+
+* `app.count.excel_files` : Number of excel files to load
+* `app.name<index>.excel_file` : Name of the excel file at `<index>`
+* `app.number<index>.excel_sheet` : Excel sheet number in the given workbook at `<index>`
+
+Column level keys in a given sheet
+
+* `app.name<index>.column` : Column index for name column (mandatory)
+* `app.email<index>.column` : Column index for email column (mandatory) 
+* `app.dob<index>.column` : Column  index for dob column (at least one of dob or hire date column is required)
+* `app.hire<index>.column` : Column index for hire date column (at least one of dob or hire date column is required)
+
+**Note** : Email and date (Either dob or hire date) combination uniquely identify a wish.
+
+#### Various Options
+
+1. We can load birthday report (name, email, dob) and anniversary (name, email, hire) report in separate excel files
+2. We can load birthday report from sheet x and anniversary report from sheet y of same excel file
+3. we can load an excel file having both birthday and anniversary data in same sheet (name, email, dob, hire).
+4. We can load any combination of above.
+
+* `` :
+
+
 
 # Configuration
 
@@ -73,6 +105,7 @@ spring.mail.test-connection=false
 spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties.mail.smtp.starttls.enable=true
 ```
+
 
 # Running
 
