@@ -32,7 +32,7 @@ public class WishingJob {
 	public void job() throws Exception {
 		LocalDate now = LocalDate.now();
 		logger.debug("Job running for {}", now);
-		dataService.forEach(LocalDate.now(), this::sendEmail);
+		dataService.forEach(now, this::sendEmail);
 		logger.debug("Job finished for {}", now);
 	}
 

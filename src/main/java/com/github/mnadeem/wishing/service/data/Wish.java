@@ -41,7 +41,7 @@ public class Wish  {
 	}
 	
 	public boolean shouldWish() {
-		return getYears() > 0;
+		return isBirthday() ? true : getYears() > 0;
 	}
 	
 	public WishType getWishType() {
