@@ -95,7 +95,7 @@ public class DefaultWishingDataService implements WishingDataService {
 		aWish.setEmail(wishData.getEmail());
 		aWish.setEventDate(wishData.getHireDate());
 		aWish.setPartition(wishData.getPartition());
-		aWish.setWish("Happy Work Anniversary!");
+		aWish.setWish("Happy Work Anniversary");
 		aWish.setDetail("");
 		return aWish;
 	}
@@ -106,7 +106,7 @@ public class DefaultWishingDataService implements WishingDataService {
 		bWish.setEmail(wishData.getEmail());
 		bWish.setEventDate(wishData.getBirthDate());
 		bWish.setPartition(wishData.getPartition());
-		bWish.setWish("Happy Birthday!");
+		bWish.setWish("Happy Birthday");
 		bWish.setDetail("");
 		return bWish;
 	}

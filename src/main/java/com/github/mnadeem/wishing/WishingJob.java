@@ -15,7 +15,6 @@ import com.github.mnadeem.wishing.service.DefaultEmailService;
 import com.github.mnadeem.wishing.service.WishingDataService;
 import com.github.mnadeem.wishing.service.data.Mail;
 import com.github.mnadeem.wishing.service.data.Wish;
-import com.github.mnadeem.wishing.service.data.Wish.WishType;
 
 @Component
 public class WishingJob {
@@ -127,6 +126,14 @@ public class WishingJob {
 	}
 
 	private String buildSubject(Wish wish) {
-		return wish.getWishType() == WishType.BIRTHDAY ? "Happy Birthday " + wish.getName() + "!" : "Happy Work Anniversay " + wish.getYearsMessage() + " Completed!";
+		StringBuilder subject = new StringBuilder();
+		subject.append(wish.getWish()).append(wish.getName());
+		if (wish.isBirthday()) {
+			subject.append("!");
+		} else {
+			subject.append(" ").append(wish.getYearsMessage()).append(" Completed!");
+		}
+		
+		return subject.toString();
 	}
 }
