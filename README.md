@@ -13,6 +13,26 @@ Application to send birthday and anniversary wish emails
 8. Sufficient document to kick started easily
 9. Download Configure and Run
 10. Configure When the job runs
+11. Different ways of loading workbook
+
+# Getting Started
+
+### Step 1 : Clone and Download the project
+
+![](docs/download.png)
+
+#### Step 2 : Extract into a location
+
+#### Step 3 : Configure
+
+Basically you have to update `src/main/resources/applicaion.properties` file for the following details
+
+* When the job should run and how frequent, default is 10:00 AM daily **app.schedule.corn** (We should run only once every day otherwise there are chances to miss mailer)
+* Weather birthday (app.mailer.birthday.enabled) or anniversary (app.mailer.anniversary.enabled) should be disabled?
+* Number of excel files to load (app.count.excel_files) default is one.
+* Configuration of each excel file : Excel file name (app.name1.excel_file), Sheet number (app.number1.excel_sheet), Email column index (app.email1.column), Dob column index (app.dob1.column), hire date column index (app.hire1.column) name column index (app.name1.column), from (app.name1.from) and cc (app.name1.cc) details. If you have more number of excel files to load you have to specify for each one, by incrementing the number
+
+#### Step 4 : Run the project
 
 # Configuration
 
