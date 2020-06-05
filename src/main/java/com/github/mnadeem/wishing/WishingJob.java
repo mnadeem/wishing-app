@@ -131,7 +131,7 @@ public class WishingJob {
 		if (wish.isBirthday()) {
 			subject.append("!");
 		} else {
-			subject.append(" ").append(wish.getYearsMessage()).append(" Completed!");
+			subject.append(", ").append(wish.getYearsMessage()).append(" Completed!");
 		}
 		
 		return subject.toString();

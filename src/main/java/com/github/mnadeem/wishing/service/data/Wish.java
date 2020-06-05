@@ -29,7 +29,7 @@ public class Wish  {
 	}
 
 	public int getYears() {
-		return Period.between(eventDate, LocalDate.now()).getYears();
+		return Period.between(eventDate, LocalDate.now().plusDays(1)).getYears();
 	}
 
 	public String getYearsMessage() {
