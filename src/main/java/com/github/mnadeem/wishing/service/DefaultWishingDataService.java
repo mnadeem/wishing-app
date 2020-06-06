@@ -65,14 +65,6 @@ public class DefaultWishingDataService implements WishingDataService {
 		Integer dobIndex = env.<Integer>getProperty("app.dob" + i + ".column", Integer.class);
 		Integer hireIndex = env.<Integer>getProperty("app.hire" + i + ".column", Integer.class);
 		int sheetNumber = env.<Integer>getProperty("app.number" + i + ".excel_sheet", Integer.class, 1);
-		
-		if (logger.isTraceEnabled()) {
-			logger.trace("file:nameIndex => {}:{} ", fileName, nameIndex);
-			logger.trace("file:emailIndex => {}:{} ", fileName, emailIndex);
-			logger.trace("file:dobIndex => {}:{} ", fileName, dobIndex);
-			logger.trace("file:hireIndex => {}:{} ", fileName, hireIndex);
-			logger.trace("file:sheetNumber => {}:{} ", fileName, sheetNumber);
-		}
 
 		ExcelFile file = new ExcelFile();
 		file.setFileName(fileName);
