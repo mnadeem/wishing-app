@@ -62,8 +62,12 @@ Column level keys in a given sheet
 
 * `app.name<index>.column` : Column index for name column (mandatory)
 * `app.email<index>.column` : Column index for email column (mandatory) 
-* `app.dob<index>.column` : Column  index for dob column (at least one of dob or hire date column is required)
-* `app.hire<index>.column` : Column index for hire date column (at least one of dob or hire date column is required)
+* `app.dob<index>.column` : Column  index for dob column, these cells should be date and not text (at least one of dob or hire date column is required)
+* `app.hire<index>.column` : Column index for hire date column, these cells should be date and not text (at least one of dob or hire date column is required)
+
+
+![](docs/column_mapping.png)
+
 
 **Note** : Email and date (Either dob or hire date) combination uniquely identify a wish.
 
