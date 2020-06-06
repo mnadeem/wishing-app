@@ -38,7 +38,6 @@ public class DefaultWishingDataService implements WishingDataService {
 	@PostConstruct
     public void init() {
 		new ExcelFileReader(resourceLoader, buildExcelFiles()).forEach(wishData -> add(wishData));
-		
 		logger.debug("Total Wishes {} ", data.size());
 		if (logger.isTraceEnabled()) {			
 			for (WishKey key : data.keySet()) {

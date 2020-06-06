@@ -113,7 +113,7 @@ public class WishingJob {
 		} else {
 			builder.append(anniversary).append("/");
 		}
-		builder.append(randomNumber(maxImagesCount)).append(".png");
+		builder.append(randomNumber(maxImagesCount)).append(getImageExtension());
 		return builder.toString();
 	}
 
@@ -128,7 +128,7 @@ public class WishingJob {
 
 	private String getBirthDayImageName() {
 		int count = env.<Integer>getProperty("app.birthday.image_count", Integer.class, 1);
-		return "data/images/birthday/" + randomNumber(count) + ".png";
+		return "data/images/birthday/" + randomNumber(count) + getImageExtension();
 	}
 
 	private int randomNumber(int max) {
@@ -150,5 +150,9 @@ public class WishingJob {
 		}
 		
 		return subject.toString();
+	}
+
+	private String getImageExtension() {
+		return "." + env.<String>getProperty("app.extension.image", String.class, "png");
 	}
 }
