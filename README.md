@@ -7,12 +7,12 @@ Application to send birthday and anniversary wish emails elegantly.
 2. Highly Configurable : Load multiple workbooks, specify columns to load, different email details (from, cc) for each workbook, supports multiple LOBs within org
 3. Randomly choose images from different buckets (birthday and anniversary, anniversary duration)
 4. Support multiple SMTP servers: Gmail, hotmail, yahoo even corporate
-5. Run anywhere in local and in cloud, as docker container or as plain app
+5. Run anywhere in local and in cloud, as docker container or as plain application
 6. Low footprint does not require database, S3, Nas storage or Web server
 7. Good Coding practices have been followed to allow for extension easily
-8. Sufficient document to kick started easily
+8. Robust documentation to kick started easily
 9. Download Configure and Run
-10. Configure When the job runs
+10. Customize When the job runs
 11. Different ways of loading workbook
 12. Only open-source application in this area
 
@@ -35,12 +35,12 @@ Application to send birthday and anniversary wish emails elegantly.
 Basically you have to update `src/main/resources/applicaion.properties` file for the following details
 
 * When the job should run and how frequent, default is 10:00 AM daily `app.schedule.corn` (We should run only once every day otherwise there are chances to miss mailer, or send multiple times)
-* Weather birthday (`app.mailer.birthday.enabled`) or anniversary (`app.mailer.anniversary.enabled`) should be disabled?
+* Weather birthday (`app.mailer.birthday.enabled`) or anniversary (`app.mailer.anniversary.enabled`) or both mailer should be disabled?
 * Number of excel files to load (`app.count.excel_files`) default is one.
 * Configuration of each excel file : Excel file name (`app.name1.excel_file`), Sheet number (`app.number1.excel_sheet`), Email column index (`app.email1.column`), Dob column index (`app.dob1.column`), hire date column index (`app.hire1.column`) name column index (`app.name1.column`), from (`app.name1.from`) and cc (`app.name1.cc`) details. If you have more number of excel files to load you have to specify for each one, by incrementing the number
 * Excel files should be kept under `src/main/resources/data/` 
-* Birthday image details : Birth images should reside under `src/main/resources/data/images/birthday` , add more images if required incrementally, naming should be 1.png, 2.png, 3.png, 5.png and so on. key `app.birthday.image_count` should reflect how many images are there, randomly images would be picked while sending wish. Refer to configuration section below for more details
-* Anniversary image details : Anniversary images should reside under `src/main/resources/data/images/anniversary` , add more images if required. There are sub folders 1 (one year), 2 (Two years), 3 (Three years) and so on, further there is default folder which is kind of catch all. All these folders should contain images named incrementally 1.png, 2.png, 3.png and so on. `app.anniversary.years_count` controls how many anniversary image folders are provided default is 5. First year anniversary image count is controlled by `app.anniversary.year1.image_coun`, second year anniversary image count is controlled by `app.anniversary.year2.image_coun` similarly third year anniversary image count is controlled by `app.anniversary.year3.image_coun` and so on. Catch all folder image count is controlled by `app.anniversary.default.image_count`. Refer to configuration section below for more details
+* Birthday image details : Birth images should reside under `src/main/resources/data/images/birthday` , add more images if required incrementally (There should not be a gap), naming should be 1.png, 2.png, 3.png, 5.png and so on. key `app.birthday.image_count` should reflect how many images are there, randomly images would be picked while sending wish. Refer to configuration section below for more details
+* Anniversary image details : Anniversary images should reside under `src/main/resources/data/images/anniversary` , add more images if required. There are sub folders 1 (one year), 2 (Two years), 3 (Three years) and so on, further there is default folder which is kind of catch all. All these folders should contain images named incrementally (There should not be any gap), 1.png, 2.png, 3.png and so on. `app.anniversary.years_count` controls how many anniversary image folders are provided default is 5. First year anniversary image count is controlled by `app.anniversary.year1.image_coun`, second year anniversary image count is controlled by `app.anniversary.year2.image_coun` similarly third year anniversary image count is controlled by `app.anniversary.year3.image_coun` and so on. Catch all folder image count is controlled by `app.anniversary.default.image_count`. Refer to configuration section below for more details
 * SMTP detail : Default have been provided for gmail
 * Email related keys : `app.name<index>.from` and `app.name<index>.cc` from and cc of email for worksheet `<index>`
 
@@ -60,16 +60,16 @@ Excel file level keys
 
 Column level keys in a given sheet
 
-* `app.name<index>.column` : Column index for name column (mandatory)
-* `app.email<index>.column` : Column index for email column (mandatory) 
-* `app.dob<index>.column` : Column  index for dob column, these cells should be date and not text (at least one of dob or hire date column is required)
-* `app.hire<index>.column` : Column index for hire date column, these cells should be date and not text (at least one of dob or hire date column is required)
+* `app.name<index>.column` : Column index for **name** column (mandatory)
+* `app.email<index>.column` : Column index for **email** column (mandatory) 
+* `app.dob<index>.column` : Column  index for **dob** column, these cells should be **date and **not text** (at least one of dob or hire date column is required)
+* `app.hire<index>.column` : Column index for hire date column, these cells should be **date** and **not text** (at least one of dob or hire date column is required)
 
 
 ![](docs/column_mapping.png)
 
 
-**Note** : Email and date (Either dob or hire date) combination uniquely identify a wish.
+**Note** : **Email** and **date** (Either dob or hire date) combination uniquely identify a wish.
 
 ## Various Options
 
@@ -79,25 +79,22 @@ Column level keys in a given sheet
 4. We can load any combination of above.
 
 
-
-
-
 # Configuration
 
-There are three types of configurations
+There are **three** types of configurations
 
 ### Workbook Configuration
-Look for an example in application.properties
+Look for an example in **application.properties**
 
 ![](docs/workbook_configurations.png)
 
 ### Image Configurations
-Look for an example in application.properties
+Look for an example in **application.properties**
 
 ![](docs/image_configurations.png)
 
 ### SMTP Configurations
-Look for an example in application.properties
+Look for an example in **application.properties**
 
 ```
 spring.mail.default-encoding=UTF-8
@@ -233,7 +230,13 @@ E:\githubRepos\wishing-app>mvn docker:stop
 
 Refer [fabric8 home](http://dmp.fabric8.io/) for details on commands
 
-```Powershell
+# Support
+If you need help feel free to drop an email or create an issue in github.com (preferred)
 
+# Contributions
 
-```
+You are encouraged to 
+
+* Provide suggestion/feedback/Issue
+* Pull requests for new features
+* Star :star2: the project
