@@ -12,7 +12,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.github.mnadeem.wishing.service.DefaultEmailService;
+import com.github.mnadeem.wishing.service.EmailService;
 import com.github.mnadeem.wishing.service.WishingDataService;
 import com.github.mnadeem.wishing.service.data.Mail;
 import com.github.mnadeem.wishing.service.data.Wish;
@@ -25,7 +25,7 @@ public class WishingJob {
 	@Autowired
 	private WishingDataService dataService;
 	@Autowired
-	private DefaultEmailService emailService;
+	private EmailService emailService;
 	@Autowired
 	private Environment env;
 
@@ -39,23 +39,15 @@ public class WishingJob {
 
 	private void sendEmail(Wish wish) {
 		if (wish.shouldWish() && isEnabled(wish)) {
-
-			try {
-				if (logger.isTraceEnabled()) {
-					logger.trace("Sending mail for {}", wish);
-				}
+			try {				
 				this.emailService.send(buildMail(wish));
-				if (logger.isTraceEnabled()) {
-					logger.trace("mail sent for {}", wish);
-				}
-				
 			} catch (MessagingException e) {
 				logger.error("Error Sending message", e);
 			}
 
 		} else {
 			if (logger.isTraceEnabled()) {
-				logger.debug("Wish not applicable / enabled for {}", wish);
+				logger.trace("Wish not applicable / enabled for {}", wish);
 			}
 		}
 	}
@@ -82,11 +74,7 @@ public class WishingJob {
 		mail.setContent(buildContent(wish));
 		mail.setImage(buildImage(wish));
 		mail.setCc(cc);
-		
-		if (logger.isTraceEnabled()) {
-			logger.trace("{}", mail);
-		}
-		
+
 		return mail;
 	}
 
