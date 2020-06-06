@@ -1,6 +1,7 @@
 package com.github.mnadeem.wishing;
 
 import java.time.LocalDate;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.mail.MessagingException;
 
@@ -132,7 +133,7 @@ public class WishingJob {
 
 	private int randomNumber(int max) {
 		int min = 1;
-		return (int) ((Math.random() * (max - min)) + min);
+		return ThreadLocalRandom.current().nextInt(min, max + 1);
 	}
 
 	private String buildContent(Wish wish) {
