@@ -38,8 +38,9 @@ public class DefaultWishingDataService implements WishingDataService {
 	@PostConstruct
     public void init() {
 		new ExcelFileReader(resourceLoader, buildExcelFiles()).forEach(wishData -> add(wishData));
-		if (logger.isTraceEnabled()) {
-			logger.trace("Total Keys {} ", data.size());
+		
+		logger.debug("Total Wishes {} ", data.size());
+		if (logger.isTraceEnabled()) {			
 			for (WishKey key : data.keySet()) {
 				logger.trace("{} => {} ", key, data.get(key).size());
 			}
@@ -67,11 +68,11 @@ public class DefaultWishingDataService implements WishingDataService {
 		int sheetNumber = env.<Integer>getProperty("app.number" + i + ".excel_sheet", Integer.class, 1);
 		
 		if (logger.isTraceEnabled()) {
-			logger.trace("nameIndex => {} ", nameIndex);
-			logger.trace("emailIndex => {} ", emailIndex);
-			logger.trace("dobIndex => {} ", dobIndex);
-			logger.trace("hireIndex => {} ", hireIndex);
-			logger.trace("sheetNumber => {} ", sheetNumber);
+			logger.trace("file:nameIndex => {}:{} ", fileName, nameIndex);
+			logger.trace("file:emailIndex => {}:{} ", fileName, emailIndex);
+			logger.trace("file:dobIndex => {}:{} ", fileName, dobIndex);
+			logger.trace("file:hireIndex => {}:{} ", fileName, hireIndex);
+			logger.trace("file:sheetNumber => {}:{} ", fileName, sheetNumber);
 		}
 
 		ExcelFile file = new ExcelFile();
@@ -92,7 +93,7 @@ public class DefaultWishingDataService implements WishingDataService {
 	@Override
 	public void add(WishData wishData) {
 		List<Wish> wishes = buildWishes(wishData);
-		wishes.forEach(wish -> data.put(wish.getWishKey(), wish));
+		wishes.forEach(wish -> data.put(wish.getWishKey(), wish));		
 	}
 
 	private List<Wish> buildWishes(WishData wishData) {

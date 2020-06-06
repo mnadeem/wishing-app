@@ -65,9 +65,15 @@ public class ExcelFileReader {
 		wishData.setPartition(excelFile.getWorkbookNumber());
 		if (excelFile.getDobIndex() != null) {			
 			wishData.setBirthDate(getLocalDate(getCellValue(row.getCell(excelFile.getDobIndex()))));
+			if (logger.isTraceEnabled()) {
+				logger.trace("Birth column not specified for {}", excelFile);
+			}
 		}
 		if (excelFile.getHireIndex() != null) {			
 			wishData.setHireDate(getLocalDate(getCellValue(row.getCell(excelFile.getHireIndex()))));
+			if (logger.isTraceEnabled()) {
+				logger.trace("Hire column not specified for {}", excelFile);
+			}
 		}
 		
 		return wishData;
