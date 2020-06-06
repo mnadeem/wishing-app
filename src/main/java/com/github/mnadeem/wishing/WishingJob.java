@@ -40,13 +40,22 @@ public class WishingJob {
 		if (wish.shouldWish() && isEnabled(wish)) {
 
 			try {
+				if (logger.isTraceEnabled()) {
+					logger.trace("Sending mail for {}", wish);
+				}
 				this.emailService.send(buildMail(wish));
+				if (logger.isTraceEnabled()) {
+					logger.trace("mail sent for {}", wish);
+				}
+				
 			} catch (MessagingException e) {
 				logger.error("Error Sending message", e);
 			}
 
 		} else {
-			logger.debug("Wish not applicable / enabled {}", wish);
+			if (logger.isTraceEnabled()) {
+				logger.debug("Wish not applicable / enabled for {}", wish);
+			}
 		}
 	}
 
@@ -72,6 +81,11 @@ public class WishingJob {
 		mail.setContent(buildContent(wish));
 		mail.setImage(buildImage(wish));
 		mail.setCc(cc);
+		
+		if (logger.isTraceEnabled()) {
+			logger.trace("{}", mail);
+		}
+		
 		return mail;
 	}
 

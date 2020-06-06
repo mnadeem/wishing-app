@@ -1,5 +1,7 @@
 package com.github.mnadeem.wishing.service.data;
 
+import java.util.Arrays;
+
 import org.springframework.util.StringUtils;
 
 public class Mail {
@@ -71,6 +73,6 @@ public class Mail {
 	@Override
 	public String toString() {
 		return "Mail [from=" + from + ", to=" + to + ", subject=" + subject + ", content=" + content + ", image="
-				+ image + "]";
-	}	
+				+ image + ", cc=" + Arrays.toString(cc) + "]";
+	}
 }
