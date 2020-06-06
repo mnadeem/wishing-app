@@ -14,6 +14,7 @@ Application to send birthday and anniversary wish emails elegantly.
 9. Download Configure and Run
 10. Configure When the job runs
 11. Different ways of loading workbook
+12. Only open-source application in this area
 
 # Prerequisites
 * Java 8
