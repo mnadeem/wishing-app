@@ -6,6 +6,7 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DateUtil;
@@ -64,55 +65,42 @@ public class ExcelFileReader {
 	}
 
 	private WishData buildWishData(Row row, ExcelFile excelFile) {
-	
 		WishData wishData = new WishData();
 
+		wishData.setPartition(excelFile.getWorkbookNumber());
 		wishData.setName((String) getCellValue(row.getCell(excelFile.getNameIndex())));
 		wishData.setEmail((String) getCellValue(row.getCell(excelFile.getEmailIndex())));
-		wishData.setPartition(excelFile.getWorkbookNumber());
 
-		if (excelFile.getDobIndex() != null) {			
-			wishData.setBirthDate(getLocalDate(getCellValue(row.getCell(excelFile.getDobIndex()))));
-		} else {
-			if (logger.isTraceEnabled()) {
-				logger.trace("Birth column not specified for {}", excelFile);
-			}
-		}
-		if (excelFile.getHireIndex() != null) {			
-			wishData.setHireDate(getLocalDate(getCellValue(row.getCell(excelFile.getHireIndex()))));
-		} else {
-			if (logger.isTraceEnabled()) {
-				logger.trace("Hire column not specified for {}", excelFile);
-			}
-		}
+		extractAndsetDate(row, "Birth date", excelFile, excelFile.getDobIndex(), (dob) -> wishData.setBirthDate(dob));
+		extractAndsetDate(row, "Hire date", excelFile, excelFile.getHireIndex(), (hireDate) -> wishData.setHireDate(hireDate));
 
 		validateRow(excelFile, wishData, row.getRowNum());
 
 		return wishData;
 	}
 
-	private void validateRow(ExcelFile excelFile, WishData wishData, Integer rowNumber) {
-		if (!StringUtils.hasText(wishData.getName())) {			
-			if (stopOnLoadError) {
-				throw new ExcelFileReadError("Name not specified for " + excelFile + " : Row " + rowNumber);
-			} else {
-				logger.warn("Name not specified for {}: Row {}", excelFile, rowNumber);
+	private void extractAndsetDate(Row row, String column, ExcelFile excelFile, Integer cellIndex, Consumer<LocalDate> dateConsumer) {
+		if (cellIndex != null) {
+			dateConsumer.accept(getLocalDate(getCellValue(row.getCell(cellIndex))));
+		} else {
+			if (logger.isTraceEnabled()) {
+				logger.trace(column + " column not specified for {} : {}", excelFile, row);
 			}
-		} 
-		
-		if (!StringUtils.hasText(wishData.getEmail())) {
-			if (stopOnLoadError) {
-				throw new ExcelFileReadError("Email not specified for " + excelFile + " : Row " + rowNumber);
-			} else {
-				logger.warn("Email not specified for {}: Row {}", excelFile, rowNumber);
-			}			
 		}
+	}
 
-		if (wishData.getHireDate() == null && wishData.getBirthDate() == null) {
+	private void validateRow(ExcelFile excelFile, WishData wishData, Integer rowNumber) {		
+		logOrThrow("Name", excelFile, rowNumber, wishData, data -> (!StringUtils.hasText(data.getName())));
+		logOrThrow("Email", excelFile, rowNumber, wishData, data -> (!StringUtils.hasText(data.getEmail())));
+		logOrThrow("Hire / Birth date both", excelFile, rowNumber, wishData, data -> (data.getHireDate() == null && data.getBirthDate() == null));
+	}
+
+	private void logOrThrow(String field, ExcelFile excelFile, Integer rowNumber, WishData wishData, Predicate<WishData> predicate) {
+		if (predicate.test(wishData)) {
 			if (stopOnLoadError) {
-				throw new ExcelFileReadError("Hire date and dob both not specified for " + excelFile + " : Row " + rowNumber);
+				throw new ExcelFileReadError(field + " not specified for " + excelFile + " : Row " + rowNumber);
 			} else {
-				logger.warn("Hire date and dob both not specified for {}: Row {}", excelFile, rowNumber);
+				logger.warn(field + " not specified for {} : Row {}", excelFile, rowNumber);
 			}	
 		} 
 	}
