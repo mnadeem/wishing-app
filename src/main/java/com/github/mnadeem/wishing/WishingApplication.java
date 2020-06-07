@@ -38,8 +38,12 @@ public class WishingApplication implements CommandLineRunner {
 			        .filter(ps -> ps instanceof EnumerablePropertySource)
 			        .map(ps -> ((EnumerablePropertySource<?>) ps).getPropertyNames())
 			        .flatMap(Arrays::<String>stream)
-			        .filter(propName -> propName.startsWith("app") || propName.startsWith("spring") || propName.startsWith("logging"))
+			        .filter(propName -> isPropertyValid(propName))
 			        .forEach(propName -> logger.trace("{} : {}", propName, env.getProperty(propName)));
 		}
+	}
+
+	private boolean isPropertyValid(String propName) {
+		return (propName.startsWith("app") || propName.startsWith("spring") || propName.startsWith("logging")) && (!propName.contains("credentials") || !propName.contains("password"));
 	}
 }
