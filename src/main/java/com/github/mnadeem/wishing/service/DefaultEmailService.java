@@ -52,7 +52,7 @@ public class DefaultEmailService implements EmailService {
                 MimeMessageHelper.MULTIPART_MODE_MIXED,
                 StandardCharsets.UTF_8.name());
 
-        helper.addAttachment("logo.png", resourceLoader.getResource("classpath:" + mail.getImage()));
+        helper.addAttachment("logo.png", resourceLoader.getResource(mail.getImage()));
         String inlineImage = "<img src=\"cid:logo.png\"></img><br/>";
 
         helper.setText(inlineImage + mail.getContent(), true);

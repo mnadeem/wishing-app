@@ -15,17 +15,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.github.mnadeem.wishing.service.data.Wish;
 import com.github.mnadeem.wishing.service.data.Wish.WishKey;
 import com.github.mnadeem.wishing.service.support.ExcelFile;
+import com.github.mnadeem.wishing.service.support.ExcelFileReadError;
 import com.github.mnadeem.wishing.service.support.ExcelFileReader;
 import com.github.mnadeem.wishing.service.support.ExcelFiles;
 import com.github.mnadeem.wishing.service.support.WishData;
 
 @Service
 public class DefaultWishingDataService implements WishingDataService {
-	
+
 	private static Logger logger = LoggerFactory.getLogger(DefaultWishingDataService.class);
 
 	@Autowired
@@ -33,7 +35,7 @@ public class DefaultWishingDataService implements WishingDataService {
 	@Autowired
 	private ResourceLoader resourceLoader;
 
-	private MultiValuedMap<WishKey, Wish> data = new HashSetValuedHashMap<WishKey, Wish>();
+	private MultiValuedMap<WishKey, Wish> cache = new HashSetValuedHashMap<WishKey, Wish>();
 
 	@PostConstruct
     public void init() {
@@ -41,10 +43,10 @@ public class DefaultWishingDataService implements WishingDataService {
 		logger.trace("Stop on load error : {} ", stopOnLoadError);
 
 		new ExcelFileReader(stopOnLoadError, resourceLoader, buildExcelFiles()).forEach(wishData -> add(wishData));
-		logger.debug("Total Wishes {} ", data.size());
+		logger.debug("Total Wishes {} ", cache.size());
 		if (logger.isTraceEnabled()) {			
-			for (WishKey key : data.keySet()) {
-				logger.trace("{} => {} ", key, data.get(key).size());
+			for (WishKey key : cache.keySet()) {
+				logger.trace("{} => {} ", key, cache.get(key).size());
 			}
 		}
     }
@@ -61,13 +63,18 @@ public class DefaultWishingDataService implements WishingDataService {
 
 	private ExcelFile buildExcelFile(int i) {
 
-		String fileName = env.<String>getProperty("app.name" + i + ".excel_file", String.class, "data/workbook1.xlsx");
+		String fileNameKey = "app.name" + i + ".excel_file";
+		String fileName = env.<String>getProperty(fileNameKey, String.class);
 
-		int nameIndex = env.<Integer>getProperty("app.name" + i + ".column", Integer.class);
-		int emailIndex = env.<Integer>getProperty("app.email" + i + ".column", Integer.class);
+		if (!StringUtils.hasText(fileName)) {
+			throw new ExcelFileReadError("Excel file name not specified, make sure to specify " + fileNameKey);
+		}
+
+		Integer nameIndex = env.<Integer>getProperty("app.name" + i + ".column", Integer.class);
+		Integer emailIndex = env.<Integer>getProperty("app.email" + i + ".column", Integer.class);
 		Integer dobIndex = env.<Integer>getProperty("app.dob" + i + ".column", Integer.class);
 		Integer hireIndex = env.<Integer>getProperty("app.hire" + i + ".column", Integer.class);
-		int sheetNumber = env.<Integer>getProperty("app.number" + i + ".excel_sheet", Integer.class, 1);
+		Integer sheetNumber = env.<Integer>getProperty("app.number" + i + ".excel_sheet", Integer.class, 1);
 
 		ExcelFile file = new ExcelFile();
 		file.setFileName(fileName);
@@ -87,7 +94,7 @@ public class DefaultWishingDataService implements WishingDataService {
 	@Override
 	public void add(WishData wishData) {
 		List<Wish> wishes = buildWishes(wishData);
-		wishes.forEach(wish -> data.put(wish.getWishKey(), wish));		
+		wishes.forEach(wish -> cache.put(wish.getWishKey(), wish));		
 	}
 
 	private List<Wish> buildWishes(WishData wishData) {
@@ -127,6 +134,6 @@ public class DefaultWishingDataService implements WishingDataService {
 	@Override
 	public void forEach(LocalDate date, Consumer<Wish> wish) {
 		WishKey wishKey = new WishKey(date.getMonthValue(), date.getDayOfMonth());
-		data.get(wishKey).forEach(wish);
+		cache.get(wishKey).forEach(wish);
 	}
 }

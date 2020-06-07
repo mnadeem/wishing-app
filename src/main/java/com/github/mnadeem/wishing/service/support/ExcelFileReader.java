@@ -42,7 +42,7 @@ public class ExcelFileReader {
 		logger.debug("Reading Excel file {} ", excelFile);
 		Workbook workbook = null;
 		try {
-			workbook = new XSSFWorkbook(resourceLoader.getResource("classpath:" + excelFile.getFileName()).getInputStream());
+			workbook = new XSSFWorkbook(resourceLoader.getResource(excelFile.getFileName()).getInputStream());
 			Sheet sheet = workbook.getSheetAt(excelFile.getSheetNumber());
 			Iterator<Row> rowsIterator = sheet.iterator();
 

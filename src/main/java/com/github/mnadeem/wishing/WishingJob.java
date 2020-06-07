@@ -89,13 +89,13 @@ public class WishingJob {
 	}
 
 	private String getAnniversaryImageName(Wish wish) {
-		int anniversarycount = env.<Integer>getProperty("app.anniversary.years_count", Integer.class, 1);
+		Integer anniversarycount = env.<Integer>getProperty("app.anniversary.years_count", Integer.class, 1);
 		int anniversary = wish.getYears();
 
-		int maxImagesCount = getImagesCount(anniversarycount, anniversary);
+		Integer maxImagesCount = getImagesCount(anniversarycount, anniversary);
 
 		StringBuilder builder = new StringBuilder();
-		builder.append("data/images/anniversay/");
+		builder.append(getBaseImagePath()).append("/anniversay/");
 		if (anniversary > anniversarycount) {
 			builder.append("default/");
 		} else {
@@ -110,13 +110,13 @@ public class WishingJob {
 		if (anniversary > anniversarycount) {
 			key = "app.anniversary.default.image_count";
 		}
-		int count = env.<Integer>getProperty(key, Integer.class, 1);
+		Integer count = env.<Integer>getProperty(key, Integer.class, 1);
 		return count;
 	}
 
 	private String getBirthDayImageName() {
-		int count = env.<Integer>getProperty("app.birthday.image_count", Integer.class, 1);
-		return "data/images/birthday/" + randomNumber(count) + getImageExtension();
+		Integer count = env.<Integer>getProperty("app.birthday.image_count", Integer.class, 1);
+		return getBaseImagePath() + "/birthday/" + randomNumber(count) + getImageExtension();
 	}
 
 	private int randomNumber(int max) {
@@ -142,5 +142,9 @@ public class WishingJob {
 
 	private String getImageExtension() {
 		return "." + env.<String>getProperty("app.extension.image", String.class, "png");
+	}
+
+	private String getBaseImagePath() {
+		return env.<String>getProperty("app.image.base_path", String.class, "classpath:data/images");
 	}
 }
