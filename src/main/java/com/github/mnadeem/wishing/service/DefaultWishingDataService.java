@@ -37,7 +37,10 @@ public class DefaultWishingDataService implements WishingDataService {
 
 	@PostConstruct
     public void init() {
-		new ExcelFileReader(resourceLoader, buildExcelFiles()).forEach(wishData -> add(wishData));
+		Boolean stopOnLoadError = env.<Boolean>getProperty("app.stop_on.load_error", Boolean.class, Boolean.FALSE);
+		logger.trace("Stop on load error : {} ", stopOnLoadError);
+
+		new ExcelFileReader(stopOnLoadError, resourceLoader, buildExcelFiles()).forEach(wishData -> add(wishData));
 		logger.debug("Total Wishes {} ", data.size());
 		if (logger.isTraceEnabled()) {			
 			for (WishKey key : data.keySet()) {
