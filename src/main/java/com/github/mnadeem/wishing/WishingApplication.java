@@ -20,9 +20,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableAsync
 @SpringBootApplication
 public class WishingApplication implements CommandLineRunner {
-	
+
 	private static Logger logger = LoggerFactory.getLogger(WishingApplication.class);
-	
+
 	@Autowired
 	private Environment env;
 
@@ -40,6 +40,6 @@ public class WishingApplication implements CommandLineRunner {
 			        .flatMap(Arrays::<String>stream)
 			        .filter(propName -> propName.startsWith("app") || propName.startsWith("spring") || propName.startsWith("logging"))
 			        .forEach(propName -> logger.trace("{} : {}", propName, env.getProperty(propName)));
-		}		
+		}
 	}
 }
