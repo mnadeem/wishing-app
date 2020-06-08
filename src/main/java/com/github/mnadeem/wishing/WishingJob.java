@@ -33,14 +33,15 @@ public class WishingJob {
 	public void job() throws Exception {
 		LocalDate now = LocalDate.now();
 		logger.debug("Job running for {}", now);
-		dataService.forEach(now, this::sendEmail);
-		logger.debug("Job finished for {}", now);
+		int wishCount = dataService.forEach(now, this::sendEmail);
+		logger.debug("Job finished for {}, sending {} wishe(s)", now, wishCount);
 	}
 
 	private void sendEmail(Wish wish) {
 		if (wish.shouldWish() && isEnabled(wish)) {
 			try {				
-				this.emailService.send(buildMail(wish));
+				Mail buildMail = buildMail(wish);
+				this.emailService.send(buildMail);
 			} catch (MessagingException e) {
 				logger.error("Error Sending message", e);
 			}
@@ -130,7 +131,7 @@ public class WishingJob {
 
 	private String buildSubject(Wish wish) {
 		StringBuilder subject = new StringBuilder();
-		subject.append(wish.getWish()).append(wish.getName());
+		subject.append(wish.getWish()).append(" ").append(wish.getName());
 		if (wish.isBirthday()) {
 			subject.append("!");
 		} else {

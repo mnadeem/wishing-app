@@ -2,6 +2,7 @@ package com.github.mnadeem.wishing.service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -132,8 +133,10 @@ public class DefaultWishingDataService implements WishingDataService {
 	}
 
 	@Override
-	public void forEach(LocalDate date, Consumer<Wish> wish) {
+	public int forEach(LocalDate date, Consumer<Wish> wish) {
 		WishKey wishKey = new WishKey(date.getMonthValue(), date.getDayOfMonth());
-		cache.get(wishKey).forEach(wish);
+		Collection<Wish> wishes = cache.get(wishKey);
+		wishes.forEach(wish);
+		return wishes.size();
 	}
 }
