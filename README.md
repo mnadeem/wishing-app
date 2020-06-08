@@ -1,7 +1,7 @@
 # Wishing Application
 Sending **Birthday/Anniversary** mailers is made so *easy* and *elegant* that even **grandma can do it**.
 
-Refer [Project Wiki](https://github.com/mnadeem/wishing-app/wiki) for more Details.
+Refer **[Project Wiki](https://github.com/mnadeem/wishing-app/wiki)** for more Details.
 
 
 
