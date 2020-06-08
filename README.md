@@ -1,5 +1,5 @@
 # Wishing Application
-Sending **Birthday / Anniversary** mailers is made so easy and elegant that even **grandma can do it**.
+Sending **Birthday/Anniversary** mailers is made so *easy* and *elegant* that even **grandma can do it**.
 
 Refer [Project Wiki](https://github.com/mnadeem/wishing-app/wiki) for more Details.
 
@@ -20,7 +20,7 @@ Dexecutor is licensed under **Apache Software License, Version 2.0**.
 
 ## Releases
 
-You can get the releases from [here](https://github.com/mnadeem/wishing-app/releases/)
+You can get the *releases* from [here](https://github.com/mnadeem/wishing-app/releases/)
 
 
 ## BUILDING from the sources
