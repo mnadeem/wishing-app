@@ -34,7 +34,7 @@ public class WishingJob {
 		LocalDate now = LocalDate.now();
 		logger.debug("Job running for {}", now);
 		int wishCount = dataService.forEach(now, this::sendEmail);
-		logger.debug("Job finished for {}, sending {} wishe(s)", now, wishCount);
+		logger.debug("Job finished for {}, sent {} wish(es)", now, wishCount);
 	}
 
 	private void sendEmail(Wish wish) {
