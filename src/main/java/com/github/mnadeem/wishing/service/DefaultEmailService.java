@@ -52,8 +52,8 @@ public class DefaultEmailService implements EmailService {
                 MimeMessageHelper.MULTIPART_MODE_MIXED,
                 StandardCharsets.UTF_8.name());
 
-        helper.addAttachment("logo.png", resourceLoader.getResource(mail.getImage()));
-        String inlineImage = "<img src=\"cid:logo.png\"></img><br/>";
+        helper.addAttachment("logo", resourceLoader.getResource(mail.getImage()));
+        String inlineImage = "<img src=\"cid:logo\" width=\"100%\" style=\"max-width: 80vw; margin: 0; border: 0; padding: 0; display: block;\"></img><br/>";
 
         helper.setText(inlineImage + mail.getContent(), true);
         helper.setSubject(mail.getSubject());
