@@ -142,7 +142,7 @@ public class WishingJob {
 	}
 
 	private String getImageExtension() {
-		return "." + env.<String>getProperty("app.extension.image", String.class, "png");
+		return "." + env.<String>getProperty("app.extension.image", String.class, "jpg");
 	}
 
 	private String getBaseImagePath() {
