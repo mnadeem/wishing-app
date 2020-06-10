@@ -29,6 +29,11 @@ public class WishingJob {
 	@Autowired
 	private Environment env;
 
+	@Scheduled(cron = "${app.ping_schedule.corn}")
+	public void ping() throws Exception {
+		logger.debug("Ping");		
+	}
+
 	@Scheduled(cron = "${app.schedule.corn}")
 	public void job() throws Exception {
 		LocalDate now = LocalDate.now();
