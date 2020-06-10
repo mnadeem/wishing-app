@@ -18,7 +18,7 @@ import com.github.mnadeem.wishing.service.data.Mail;
 
 @Service
 public class DefaultEmailService implements EmailService {
-	
+
 	private static Logger logger = LoggerFactory.getLogger(DefaultEmailService.class);
 
     @Autowired
@@ -43,6 +43,7 @@ public class DefaultEmailService implements EmailService {
 		MimeMessage message = emailSender.createMimeMessage();
         
         fillMessage(mail, message);
+        addHeaders(mail, message);
         
 		return message;
 	}
@@ -61,6 +62,17 @@ public class DefaultEmailService implements EmailService {
         helper.setFrom(mail.getFrom());
         if (mail.getCc() != null) {			
         	helper.setCc(mail.getCc());
-		}
+		}        
+	}
+
+	private void addHeaders(Mail mail, MimeMessage message) {
+		if (mail.hasExpire()) {
+			try {
+				message.setHeader("Expires", mail.getExpire());
+				message.setHeader("Expiry-Date", mail.getExpire()); // Outlook works with this, it seems
+			} catch (MessagingException e) {
+				logger.error("Error setting expire");
+			}
+		}		
 	}
 }

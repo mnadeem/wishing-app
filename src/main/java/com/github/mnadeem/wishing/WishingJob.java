@@ -1,6 +1,8 @@
 package com.github.mnadeem.wishing;
 
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.mail.MessagingException;
@@ -31,7 +33,7 @@ public class WishingJob {
 
 	@Scheduled(cron = "${app.ping_schedule.corn}")
 	public void ping() throws Exception {
-		logger.debug("Ping");		
+		logger.trace("Ping");		
 	}
 
 	@Scheduled(cron = "${app.schedule.corn}")
@@ -80,6 +82,7 @@ public class WishingJob {
 		mail.setContent(buildContent(wish));
 		mail.setImage(buildImage(wish));
 		mail.setCc(cc);
+		mail.setExpire(getExpire());
 
 		return mail;
 	}
@@ -152,5 +155,16 @@ public class WishingJob {
 
 	private String getBaseImagePath() {
 		return env.<String>getProperty("app.image.base_path", String.class, "classpath:data/images");
+	}
+
+	private String getExpire() {
+		Integer expire = env.<Integer>getProperty("app.mail.expire_after_days", Integer.class);
+		String result = null;
+		if (expire != null) {
+			ZonedDateTime now = ZonedDateTime.now();  
+	        DateTimeFormatter format = DateTimeFormatter.ofPattern("EEE, d MMM yyyy hh:mm:ss Z");  
+	        result = now.format(format);  
+		}
+		return result;
 	}
 }

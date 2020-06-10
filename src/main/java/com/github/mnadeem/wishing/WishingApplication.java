@@ -26,12 +26,13 @@ public class WishingApplication implements CommandLineRunner {
 	@Autowired
 	private Environment env;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) {  
 		SpringApplication.run(WishingApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
+		
 		if (logger.isTraceEnabled()) {
 			MutablePropertySources propSrcs = ((AbstractEnvironment) env).getPropertySources();
 			StreamSupport.stream(propSrcs.spliterator(), false)

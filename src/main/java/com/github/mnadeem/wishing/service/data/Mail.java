@@ -12,6 +12,7 @@ public class Mail {
     private String content;
     private String image;
     private String[] cc;
+    private String expire;
 
     public Mail() {
     	
@@ -56,9 +57,21 @@ public class Mail {
 	public void setImage(String image) {
 		this.image = image;
 	}
-	
+
 	public String[] getCc() {
 		return cc;
+	}
+	
+	public boolean hasExpire() {
+		return StringUtils.hasText(expire);
+	}
+
+	public String getExpire() {
+		return expire;
+	}
+
+	public void setExpire(String expire) {
+		this.expire = expire;
 	}
 
 	public void setCc(String cc) {
