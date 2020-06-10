@@ -158,12 +158,12 @@ public class WishingJob {
 	}
 
 	private String getExpire() {
-		Integer expire = env.<Integer>getProperty("app.mail.expire_after_days", Integer.class);
+		Integer expireDays = env.<Integer>getProperty("app.mail.expire_after_days", Integer.class);
 		String result = null;
-		if (expire != null) {
-			ZonedDateTime now = ZonedDateTime.now();  
+		if (expireDays != null && expireDays > 0) {
+			ZonedDateTime expireDate = ZonedDateTime.now().plusDays(expireDays);
 	        DateTimeFormatter format = DateTimeFormatter.ofPattern("EEE, d MMM yyyy hh:mm:ss Z");  
-	        result = now.format(format);  
+	        result = expireDate.format(format);  
 		}
 		return result;
 	}
