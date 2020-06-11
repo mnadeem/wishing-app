@@ -1,4 +1,4 @@
-package com.github.mnadeem.wishing;
+package com.github.mnadeem.wishing.job;
 
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.github.mnadeem.wishing.service.EmailService;
@@ -20,9 +19,9 @@ import com.github.mnadeem.wishing.service.data.Mail;
 import com.github.mnadeem.wishing.service.data.Wish;
 
 @Component
-public class WishingJob {
+public class DefaultWishingJob implements WishingJob {
 
-	private static Logger logger = LoggerFactory.getLogger(WishingJob.class);
+	private static Logger logger = LoggerFactory.getLogger(DefaultWishingJob.class);
 
 	@Autowired
 	private WishingDataService dataService;
@@ -30,14 +29,14 @@ public class WishingJob {
 	private EmailService emailService;
 	@Autowired
 	private Environment env;
-
-	@Scheduled(cron = "${app.ping_schedule.corn}")
+	
+	@Override
 	public void ping() throws Exception {
 		logger.trace("Ping");		
 	}
-
-	@Scheduled(cron = "${app.schedule.corn}")
-	public void job() throws Exception {
+	
+	@Override
+	public void processWishes() throws Exception {
 		LocalDate now = LocalDate.now();
 		logger.debug("Job running for {}", now);
 		int wishCount = dataService.forEach(now, this::sendEmail);

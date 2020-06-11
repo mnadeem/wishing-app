@@ -16,6 +16,8 @@ import org.springframework.core.env.MutablePropertySources;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+import com.github.mnadeem.wishing.job.WishingJob;
+
 @EnableScheduling
 @EnableAsync
 @SpringBootApplication
@@ -25,6 +27,8 @@ public class WishingApplication implements CommandLineRunner {
 
 	@Autowired
 	private Environment env;
+	@Autowired
+	private WishingJob job;
 
 	public static void main(String[] args) {  
 		SpringApplication.run(WishingApplication.class, args);
@@ -42,9 +46,18 @@ public class WishingApplication implements CommandLineRunner {
 			        .filter(propName -> isPropertyValid(propName))
 			        .forEach(propName -> logger.trace("{} : {}", propName, env.getProperty(propName)));
 		}
+		
+		if (externallyManaged()) {
+			logger.info("Trigger externally managed, and hence running the process only once");
+			job.processWishes();
+		}
 	}
 
 	private boolean isPropertyValid(String propName) {
 		return (propName.startsWith("app") || propName.startsWith("spring") || propName.startsWith("logging")) && (!propName.contains("credentials") || !propName.contains("password"));
+	}
+	
+	private Boolean externallyManaged() {
+		return env.<Boolean>getProperty("app.schedule.externally_managed", Boolean.class, Boolean.FALSE);
 	}
 }
