@@ -1,5 +1,6 @@
 package com.github.mnadeem.wishing;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.stream.StreamSupport;
 
@@ -56,7 +57,7 @@ public class WishingApplication implements CommandLineRunner {
 
 		if (externallyManaged()) {
 			logger.info("Trigger externally managed, and hence running the process only once");
-			job.processWishes();
+			job.processWishes(LocalDate.now());
 		} else {
 			logger.info("Trigger internally managed, and hence process would keep on running until forcibly stopped");
 		}

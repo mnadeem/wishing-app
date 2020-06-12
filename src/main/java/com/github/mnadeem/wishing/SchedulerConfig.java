@@ -1,5 +1,6 @@
 package com.github.mnadeem.wishing;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import org.slf4j.Logger;
@@ -49,15 +50,19 @@ public class SchedulerConfig implements SchedulingConfigurer {
 				return cronTrigger.nextExecutionTime(triggerContext);
 			}
 		};
-		taskRegistrar.addTriggerTask(() -> {
+		taskRegistrar.addTriggerTask(pingTask(), pingTrigger);
+	}
+
+	private Runnable pingTask() {
+		return () -> {
 			try {
 				job.ping();
 			} catch (Exception e) {
-				logger.error("Error executing " + e.getMessage());
+				logger.error("Error executing Ping " + e.getMessage());
 			}
-		}, pingTrigger);
+		};
 	}
-	
+
 	private void processWishTrigger(ScheduledTaskRegistrar taskRegistrar) {
 		Trigger processWishTrigger = new Trigger() {
 			
@@ -67,13 +72,17 @@ public class SchedulerConfig implements SchedulingConfigurer {
 				return cronTrigger.nextExecutionTime(triggerContext);
 			}
 		};
-		taskRegistrar.addTriggerTask(() -> {
+		taskRegistrar.addTriggerTask(wishTask(), processWishTrigger);
+	}
+
+	private Runnable wishTask() {
+		return () -> {
 			try {
-				job.processWishes();
+				job.processWishes(LocalDate.now());
 			} catch (Exception e) {
-				logger.error("Error executing " + e.getMessage());
+				logger.error("Error processing wishes " + e.getMessage());
 			}
-		}, processWishTrigger);
+		};
 	}
 
 	private Boolean externallyManaged() {

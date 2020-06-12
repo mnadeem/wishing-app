@@ -36,13 +36,12 @@ public class DefaultWishingJob implements WishingJob {
 	public void ping() throws Exception {
 		logger.trace("Ping");		
 	}
-	
+
 	@Override
-	public void processWishes() throws Exception {
-		LocalDate now = LocalDate.now();
-		logger.debug("Job running for {}", now);
-		int wishCount = dataService.forEach(now, this::sendEmail);
-		logger.debug("Job finished for {}, processed {} wish(es)", now, wishCount);
+	public void processWishes(LocalDate date) throws Exception {
+		logger.debug("Job running for {}", date);
+		int wishCount = dataService.forEach(date, this::sendEmail);
+		logger.debug("Job finished for {}, processed {} wish(es)", date, wishCount);
 	}
 
 	private void sendEmail(Wish wish) {
@@ -146,7 +145,7 @@ public class DefaultWishingJob implements WishingJob {
 		} else {
 			subject.append(", ").append(wish.getYearsMessage()).append(" Completed!");
 		}
-		
+
 		return subject.toString();
 	}
 
