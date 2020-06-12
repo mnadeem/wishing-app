@@ -13,6 +13,8 @@ import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.scheduling.support.CronTrigger;
 
+import static com.github.mnadeem.wishing.Constants.*;
+
 import com.github.mnadeem.wishing.job.WishingJob;
 
 @Configuration
@@ -43,7 +45,7 @@ public class SchedulerConfig implements SchedulingConfigurer {
 			
 			@Override
 			public Date nextExecutionTime(TriggerContext triggerContext) {
-				CronTrigger cronTrigger = new CronTrigger(getSchedule("app.ping_schedule.corn"));
+				CronTrigger cronTrigger = new CronTrigger(getSchedule(PROPERTY_NAME_CORN_PING_SCHEDULE));
 				return cronTrigger.nextExecutionTime(triggerContext);
 			}
 		};
@@ -61,7 +63,7 @@ public class SchedulerConfig implements SchedulingConfigurer {
 			
 			@Override
 			public Date nextExecutionTime(TriggerContext triggerContext) {
-				CronTrigger cronTrigger = new CronTrigger(getSchedule("app.schedule.corn"));
+				CronTrigger cronTrigger = new CronTrigger(getSchedule(PROPERTY_NAME_CORN_SCHEDULE));
 				return cronTrigger.nextExecutionTime(triggerContext);
 			}
 		};
@@ -75,7 +77,7 @@ public class SchedulerConfig implements SchedulingConfigurer {
 	}
 
 	private Boolean externallyManaged() {
-		return env.<Boolean>getProperty("app.schedule.externally_managed", Boolean.class, Boolean.FALSE);
+		return env.<Boolean>getProperty(PROPERTY_NAME_SCHEDULE_EXTERNALLY_MANAGED, Boolean.class, Boolean.FALSE);
 	}
 	
 	private String getSchedule(String key) {

@@ -18,6 +18,8 @@ import com.github.mnadeem.wishing.service.WishingDataService;
 import com.github.mnadeem.wishing.service.data.Mail;
 import com.github.mnadeem.wishing.service.data.Wish;
 
+import static com.github.mnadeem.wishing.Constants.*;
+
 @Component
 public class DefaultWishingJob implements WishingJob {
 
@@ -72,7 +74,7 @@ public class DefaultWishingJob implements WishingJob {
 	}
 
 	private Mail buildMail(Wish wish) {
-		String from = env.<String>getProperty("app.name" + wish.getPartition() + ".from", String.class, "donotreply@nowhere.com");
+		String from = env.<String>getProperty("app.name" + wish.getPartition() + ".from", String.class, DEFAULT_FROM_EMAIL_ADDRESS);
 		String cc = env.<String>getProperty("app.name" + wish.getPartition() + ".cc", String.class, "");
 		Mail mail = new Mail();
 		mail.setTo(wish.getEmail());
@@ -97,7 +99,7 @@ public class DefaultWishingJob implements WishingJob {
 	}
 
 	private String getAnniversaryImageName(Wish wish) {
-		Integer anniversarycount = env.<Integer>getProperty("app.anniversary.years_count", Integer.class, 1);
+		Integer anniversarycount = env.<Integer>getProperty(PROPERTY_NAME_ANNIVERSARY_YEARS_COUNT, Integer.class, 1);
 		int anniversary = wish.getYears();
 
 		Integer maxImagesCount = getImagesCount(anniversarycount, anniversary);
@@ -116,14 +118,14 @@ public class DefaultWishingJob implements WishingJob {
 	private int getImagesCount(int anniversarycount, int anniversary) {
 		String key = "app.anniversary.year" + anniversary + ".image_count";
 		if (anniversary > anniversarycount) {
-			key = "app.anniversary.default.image_count";
+			key = PROPERTY_NAME_ANNIVERSARY_DEFAULT_IMAGE_COUNT;
 		}
 		Integer count = env.<Integer>getProperty(key, Integer.class, 1);
 		return count;
 	}
 
 	private String getBirthDayImageName() {
-		Integer count = env.<Integer>getProperty("app.birthday.image_count", Integer.class, 1);
+		Integer count = env.<Integer>getProperty(PROPERTY_NAME_BIRTHDAY_IMAGE_COUNT, Integer.class, 1);
 		return getBaseImagePath() + "/birthday/" + randomNumber(count) + getImageExtension();
 	}
 
@@ -149,19 +151,19 @@ public class DefaultWishingJob implements WishingJob {
 	}
 
 	private String getImageExtension() {
-		return "." + env.<String>getProperty("app.extension.image", String.class, "jpg");
+		return "." + env.<String>getProperty(PROPERTY_NAME_IMAGE_EXTENSION, String.class, EXTENSION_JPG);
 	}
 
 	private String getBaseImagePath() {
-		return env.<String>getProperty("app.image.base_path", String.class, "classpath:data/images");
+		return env.<String>getProperty(PROPERTY_NAME_IMAGE_BASE_PATH, String.class, "classpath:data/images");
 	}
 
 	private String getExpire() {
-		Integer expireDays = env.<Integer>getProperty("app.mail.expire_after_days", Integer.class);
+		Integer expireDays = env.<Integer>getProperty(PROPERTY_NAME_MAIL_EXPIRE_AFTER_DAYS, Integer.class);
 		String result = null;
 		if (expireDays != null && expireDays > 0) {
 			ZonedDateTime expireDate = ZonedDateTime.now().plusDays(expireDays);
-	        DateTimeFormatter format = DateTimeFormatter.ofPattern("EEE, d MMM yyyy hh:mm:ss Z");  
+	        DateTimeFormatter format = DateTimeFormatter.ofPattern(DATE_PATTERN_MAIL_EXPIRE);  
 	        result = expireDate.format(format);  
 		}
 		return result;

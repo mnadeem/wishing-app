@@ -26,6 +26,8 @@ import com.github.mnadeem.wishing.service.support.ExcelFileReader;
 import com.github.mnadeem.wishing.service.support.ExcelFiles;
 import com.github.mnadeem.wishing.service.support.WishData;
 
+import static com.github.mnadeem.wishing.Constants.*;
+
 @Service
 public class DefaultWishingDataService implements WishingDataService {
 
@@ -40,7 +42,7 @@ public class DefaultWishingDataService implements WishingDataService {
 
 	@PostConstruct
     public void init() {
-		Boolean stopOnLoadError = env.<Boolean>getProperty("app.stop_on.load_error", Boolean.class, Boolean.FALSE);
+		Boolean stopOnLoadError = env.<Boolean>getProperty(PROPERTY_NAME_STOP_ON_LOAD_ERROR, Boolean.class, Boolean.FALSE);
 		logger.trace("Stop on load error : {} ", stopOnLoadError);
 
 		new ExcelFileReader(stopOnLoadError, resourceLoader, buildExcelFiles()).forEach(wishData -> add(wishData));
@@ -53,7 +55,7 @@ public class DefaultWishingDataService implements WishingDataService {
     }
 
 	private ExcelFiles buildExcelFiles() {
-		Integer fileCount = env.<Integer>getProperty("app.count.excel_files", Integer.class, 1);
+		Integer fileCount = env.<Integer>getProperty(PROPERTY_NAME_EXCEL_FILES_COUNT, Integer.class, 1);
 		logger.debug("Loading {} excel files ", fileCount);
 		List<ExcelFile> files = new ArrayList<>();
 		for (int i = 0; i < fileCount; i++) {
