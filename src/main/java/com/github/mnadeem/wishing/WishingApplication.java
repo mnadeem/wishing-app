@@ -1,12 +1,17 @@
 package com.github.mnadeem.wishing;
 
+import static com.github.mnadeem.wishing.Constants.PROPERTY_NAME_BELATED_DATES;
+import static com.github.mnadeem.wishing.Constants.PROPERTY_NAME_BELATED_DATE_FORMAT;
+import static com.github.mnadeem.wishing.Constants.PROPERTY_NAME_BELATED_MAX_BACK_DAYS;
+import static com.github.mnadeem.wishing.Constants.PROPERTY_NAME_SCHEDULE_EXTERNALLY_MANAGED;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.StreamSupport;
 
 import org.slf4j.Logger;
@@ -22,8 +27,6 @@ import org.springframework.core.env.MutablePropertySources;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.util.StringUtils;
-
-import static com.github.mnadeem.wishing.Constants.*;
 
 import com.github.mnadeem.wishing.job.WishingJob;
 
@@ -61,10 +64,16 @@ public class WishingApplication implements CommandLineRunner {
 			        .forEach(propName -> logger.trace("{} : {}", propName, env.getProperty(propName)));
 		}
 
-		List<LocalDate> belatedDates = belatedDates();
+		Set<LocalDate> belatedDates = belatedDates();
 		if (!belatedDates.isEmpty()) {
 			logger.info("Processing Belated Dates {} ", belatedDates);
-			belatedDates.forEach(date -> processWish(date));
+			belatedDates.forEach(date -> {
+				try {
+					job.processWishes(date);
+				} catch (Exception e) {
+					logger.error("Error executing Belated Wish " + e.getMessage());
+				}
+			});
 			logger.info("Finished processing Belated Dates");
 		}
 
@@ -76,16 +85,6 @@ public class WishingApplication implements CommandLineRunner {
 		}
 	}
 
-	private Runnable processWish(LocalDate date) {
-		return () -> {
-			try {
-				job.processWishes(date);
-			} catch (Exception e) {
-				logger.error("Error executing Belated Wish " + e.getMessage());
-			}
-		};
-	}
-
 	private boolean isPropertyValid(String propName) {
 		return (propName.startsWith("app") || propName.startsWith(PROPERTY_NAME_SPRING) || propName.startsWith(PROPERTY_NAME_LOGGING)) && (!propName.contains(PROPERTY_NAME_CREDENTIALS) || !propName.contains(PROPERTY_NAME_PASSWORD));
 	}
@@ -94,8 +93,8 @@ public class WishingApplication implements CommandLineRunner {
 		return env.<Boolean>getProperty(PROPERTY_NAME_SCHEDULE_EXTERNALLY_MANAGED, Boolean.class, Boolean.FALSE);
 	}
 
-	private List<LocalDate> belatedDates() {
-		List<LocalDate> result = Collections.emptyList();
+	private Set<LocalDate> belatedDates() {
+		Set<LocalDate> result = Collections.emptySet();
 		String belatedDatesPropValue = belatedDatesPropValue();
 		
 		if (StringUtils.hasText(belatedDatesPropValue)) {
@@ -105,8 +104,8 @@ public class WishingApplication implements CommandLineRunner {
 		return result;
 	}
 
-	private List<LocalDate> extractBelatedDates(String belatedDatesPropValue) {
-		List<LocalDate> result = new ArrayList<LocalDate>();
+	private Set<LocalDate> extractBelatedDates(String belatedDatesPropValue) {
+		Set<LocalDate> result = new HashSet<LocalDate>();
 		String belatedDateFormat = belatedDateFormat();
 		Integer belatedMaxBackDays = belatedMaxBackDays();
 
@@ -119,7 +118,7 @@ public class WishingApplication implements CommandLineRunner {
 		return result;
 	}
 
-	private void addBelatedDate(List<LocalDate> result, String belatedDateFormat, Integer belatedMaxBackDays,
+	private void addBelatedDate(Set<LocalDate> result, String belatedDateFormat, Integer belatedMaxBackDays,
 			String dateStr) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(belatedDateFormat);
 		LocalDate date = LocalDate.parse(dateStr.trim(), formatter);
