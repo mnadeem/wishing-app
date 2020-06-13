@@ -31,7 +31,7 @@ public class DefaultWishingJob implements WishingJob {
 	private EmailService emailService;
 	@Autowired
 	private Environment env;
-	
+
 	@Override
 	public void ping() throws Exception {
 		logger.trace("Ping");		

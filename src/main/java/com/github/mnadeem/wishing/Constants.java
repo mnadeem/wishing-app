@@ -16,6 +16,10 @@ public final class Constants {
 	public static final String PROPERTY_NAME_THREAD_CORE_POOL_SIZE = "app.pool.thread.core_size";
 	public static final String PROPERTY_NAME_THREAD_MAX_POOL_SIZE = "app.pool.thread.max_size";
 	
+	public static final String PROPERTY_NAME_BELATED_DATE_FORMAT = "app.belated.date_format";
+	public static final String PROPERTY_NAME_BELATED_MAX_BACK_DAYS = "app.belated.max.back_days";
+	public static final String PROPERTY_NAME_BELATED_DATES = "app.belated.dates";
+	
 	
 	public static final String DATE_PATTERN_MAIL_EXPIRE = "EEE, d MMM yyyy hh:mm:ss Z";
 	
