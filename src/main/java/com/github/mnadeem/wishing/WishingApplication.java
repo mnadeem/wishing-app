@@ -28,6 +28,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.util.StringUtils;
 
+import com.github.mnadeem.wishing.function.ThrowingConsumer;
 import com.github.mnadeem.wishing.job.WishingJob;
 
 @EnableScheduling
@@ -67,13 +68,7 @@ public class WishingApplication implements CommandLineRunner {
 		Set<LocalDate> belatedDates = belatedDates();
 		if (!belatedDates.isEmpty()) {
 			logger.info("Processing Belated Dates {} ", belatedDates);
-			belatedDates.forEach(date -> {
-				try {
-					job.processWishes(date);
-				} catch (Exception e) {
-					logger.error("Error executing Belated Wish " + e.getMessage());
-				}
-			});
+			belatedDates.forEach((ThrowingConsumer<LocalDate>) date -> job.processWishes(date));
 			logger.info("Finished processing Belated Dates");
 		}
 
