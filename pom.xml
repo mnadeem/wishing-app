@@ -17,6 +17,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<poi.vesion>4.1.2</poi.vesion>
+		<commons-csv.version>1.8</commons-csv.version>
 		<plugin.jib-maven-plugin>2.3.0</plugin.jib-maven-plugin>
 	</properties>
 
@@ -34,6 +35,11 @@
 		    <groupId>org.apache.poi</groupId>
 		    <artifactId>poi</artifactId>
 		    <version>${poi.vesion}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-csv</artifactId>
+		    <version>${commons-csv.version}</version>
 		</dependency>
 
 		<dependency>
