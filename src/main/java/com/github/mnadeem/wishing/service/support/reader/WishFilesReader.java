@@ -36,12 +36,7 @@ public class WishFilesReader {
 	}
 
 	private WishFileReader getWishFileReader(WishFile wishFile) {
-		InputStream stream;
-		try {
-			stream = resourceLoader.getResource(wishFile.getFileName()).getInputStream();
-		} catch (IOException e) {
-			throw new WishFileReadError("Can read file : " + wishFile);
-		}
+		InputStream stream = getStream(wishFile);
 
 		WishFileReader wishFileReader = null;
 		if (wishFile.isCsv()) {
@@ -52,5 +47,15 @@ public class WishFilesReader {
 			throw new IllegalArgumentException("Invalid Wish file");
 		}
 		return wishFileReader;
+	}
+
+	private InputStream getStream(WishFile wishFile) {
+		InputStream stream;
+		try {
+			stream = resourceLoader.getResource(wishFile.getFileName()).getInputStream();
+		} catch (IOException e) {
+			throw new WishFileReadError("Can read file : " + wishFile);
+		}
+		return stream;
 	}
 }

@@ -102,6 +102,9 @@ public class WishFile {
 	@Override
 	public String toString() {
 		return "WishFile [fileName=" + fileName + ", nameIndex=" + nameIndex + ", emailIndex=" + emailIndex
-				+ ", dobIndex=" + dobIndex + ", hireIndex=" + hireIndex + ", sheetNumber=" + sheetNumber + "]";
+				+ ", dobIndex=" + dobIndex + ", hireIndex=" + hireIndex + ", sheetNumber=" + sheetNumber
+				+ ", workbookNumber=" + workbookNumber + ", dobFormatter=" + dobFormatter + ", hireFormatter="
+				+ hireFormatter + "]";
 	}
+
 }

@@ -10,6 +10,7 @@ import java.util.function.Consumer;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.poi.util.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,14 +35,19 @@ public class CsvWishFileReader extends BaseFileReader {
 
 	@Override
 	public void readRows(WishFile wishFile, Consumer<WishData> consumer) {
+		logger.debug("Reading csv file {} ", wishFile);
 		InputStreamReader input = new InputStreamReader(stream);
+		CSVParser csvParser = null;
 		try {
-			CSVParser csvParser = CSVFormat.DEFAULT.withDelimiter(';').withFirstRecordAsHeader().parse(input);
+			csvParser = CSVFormat.DEFAULT.withDelimiter(';').withFirstRecordAsHeader().parse(input);
 			for (CSVRecord record : csvParser) {
 				consumer.accept(buildWishData(record, wishFile));
 			}
 		} catch (IOException e) {
 			logger.error("Error Reading CSV file : " + wishFile, e);
+		} finally {
+			IOUtils.closeQuietly(csvParser);
+			IOUtils.closeQuietly(stream);
 		}		
 	}
 
