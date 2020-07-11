@@ -12,10 +12,11 @@ public final class Constants {
 	public static final String PROPERTY_NAME_IMAGE_BASE_PATH = "app.image.base_path";
 	public static final String PROPERTY_NAME_MAIL_EXPIRE_AFTER_DAYS = "app.mail.expire_after_days";
 	public static final String PROPERTY_NAME_STOP_ON_LOAD_ERROR = "app.stop_on.load_error";
-	public static final String PROPERTY_NAME_EXCEL_FILES_COUNT = "app.count.excel_files";
+	public static final String PROPERTY_NAME_WISH_FILES_COUNT = "app.count.wish_files";
 	public static final String PROPERTY_NAME_THREAD_CORE_POOL_SIZE = "app.pool.thread.core_size";
 	public static final String PROPERTY_NAME_THREAD_MAX_POOL_SIZE = "app.pool.thread.max_size";
 	
+	public static final String PROPERTY_NAME_BELATED_PREFIX = "app.belated.prefix";
 	public static final String PROPERTY_NAME_BELATED_DATE_FORMAT = "app.belated.date_format";
 	public static final String PROPERTY_NAME_BELATED_MAX_BACK_DAYS = "app.belated.max.back_days";
 	public static final String PROPERTY_NAME_BELATED_DATES = "app.belated.dates";

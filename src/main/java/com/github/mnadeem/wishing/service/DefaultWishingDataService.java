@@ -1,10 +1,13 @@
 package com.github.mnadeem.wishing.service;
 
+import static com.github.mnadeem.wishing.Constants.PROPERTY_NAME_WISH_FILES_COUNT;
+import static com.github.mnadeem.wishing.Constants.PROPERTY_NAME_STOP_ON_LOAD_ERROR;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 import javax.annotation.PostConstruct;
 
@@ -20,13 +23,11 @@ import org.springframework.util.StringUtils;
 
 import com.github.mnadeem.wishing.service.data.Wish;
 import com.github.mnadeem.wishing.service.data.Wish.WishKey;
-import com.github.mnadeem.wishing.service.support.ExcelFile;
-import com.github.mnadeem.wishing.service.support.ExcelFileReadError;
-import com.github.mnadeem.wishing.service.support.ExcelFileReader;
-import com.github.mnadeem.wishing.service.support.ExcelFiles;
+import com.github.mnadeem.wishing.service.support.WishFile;
+import com.github.mnadeem.wishing.service.support.WishFileReadError;
+import com.github.mnadeem.wishing.service.support.WishFileReader;
+import com.github.mnadeem.wishing.service.support.WishFiles;
 import com.github.mnadeem.wishing.service.support.WishData;
-
-import static com.github.mnadeem.wishing.Constants.*;
 
 @Service
 public class DefaultWishingDataService implements WishingDataService {
@@ -45,7 +46,7 @@ public class DefaultWishingDataService implements WishingDataService {
 		Boolean stopOnLoadError = env.<Boolean>getProperty(PROPERTY_NAME_STOP_ON_LOAD_ERROR, Boolean.class, Boolean.FALSE);
 		logger.trace("Stop on load error : {} ", stopOnLoadError);
 
-		new ExcelFileReader(stopOnLoadError, resourceLoader, buildExcelFiles()).forEach(wishData -> add(wishData));
+		new WishFileReader(stopOnLoadError, resourceLoader, buildWishFiles()).forEach(wishData -> add(wishData));
 		logger.debug("Total Wishes {} ", cache.size());
 		if (logger.isTraceEnabled()) {			
 			for (WishKey key : cache.keySet()) {
@@ -54,23 +55,23 @@ public class DefaultWishingDataService implements WishingDataService {
 		}
     }
 
-	private ExcelFiles buildExcelFiles() {
-		Integer fileCount = env.<Integer>getProperty(PROPERTY_NAME_EXCEL_FILES_COUNT, Integer.class, 1);
-		logger.debug("Loading {} excel files ", fileCount);
-		List<ExcelFile> files = new ArrayList<>();
+	private WishFiles buildWishFiles() {
+		Integer fileCount = env.<Integer>getProperty(PROPERTY_NAME_WISH_FILES_COUNT, Integer.class, 1);
+		logger.debug("Loading {} wish files ", fileCount);
+		List<WishFile> files = new ArrayList<>();
 		for (int i = 0; i < fileCount; i++) {
-			files.add(buildExcelFile(i + 1));		
+			files.add(buildWishFile(i + 1));		
 		}
-		return new ExcelFiles(files);
+		return new WishFiles(files);
 	}
 
-	private ExcelFile buildExcelFile(int i) {
+	private WishFile buildWishFile(int i) {
 
-		String fileNameKey = "app.name" + i + ".excel_file";
+		String fileNameKey = "app.name" + i + ".wish_file";
 		String fileName = env.<String>getProperty(fileNameKey, String.class);
 
 		if (!StringUtils.hasText(fileName)) {
-			throw new ExcelFileReadError("Excel file name not specified, make sure to specify " + fileNameKey);
+			throw new WishFileReadError("Wish file name not specified, make sure to specify " + fileNameKey);
 		}
 
 		Integer nameIndex = env.<Integer>getProperty("app.name" + i + ".column", Integer.class);
@@ -79,7 +80,7 @@ public class DefaultWishingDataService implements WishingDataService {
 		Integer hireIndex = env.<Integer>getProperty("app.hire" + i + ".column", Integer.class);
 		Integer sheetNumber = env.<Integer>getProperty("app.number" + i + ".excel_sheet", Integer.class, 1);
 
-		ExcelFile file = new ExcelFile();
+		WishFile file = new WishFile();
 		file.setFileName(fileName);
 		file.setNameIndex(nameIndex - 1);
 		file.setEmailIndex(emailIndex - 1);
@@ -135,10 +136,10 @@ public class DefaultWishingDataService implements WishingDataService {
 	}
 
 	@Override
-	public int forEach(LocalDate date, Consumer<Wish> wish) {
+	public int forEach(LocalDate date, BiConsumer<Wish, LocalDate> wish) {
 		WishKey wishKey = new WishKey(date.getMonthValue(), date.getDayOfMonth());
 		Collection<Wish> wishes = cache.get(wishKey);
-		wishes.forEach(wish);
+		wishes.stream().forEach((c) -> wish.accept(c, date));
 		return wishes.size();
 	}
 }

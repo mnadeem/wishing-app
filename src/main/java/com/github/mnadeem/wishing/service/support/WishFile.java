@@ -1,6 +1,6 @@
 package com.github.mnadeem.wishing.service.support;
 
-public class ExcelFile {
+public class WishFile {
 
 	private String fileName;
 	private int nameIndex;
@@ -68,7 +68,7 @@ public class ExcelFile {
 
 	@Override
 	public String toString() {
-		return "ExcelFile [fileName=" + fileName + ", nameIndex=" + nameIndex + ", emailIndex=" + emailIndex
+		return "WishFile [fileName=" + fileName + ", nameIndex=" + nameIndex + ", emailIndex=" + emailIndex
 				+ ", dobIndex=" + dobIndex + ", hireIndex=" + hireIndex + ", sheetNumber=" + sheetNumber + "]";
 	}
 }

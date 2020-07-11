@@ -1,5 +1,16 @@
 package com.github.mnadeem.wishing.job;
 
+import static com.github.mnadeem.wishing.Constants.DATE_PATTERN_MAIL_EXPIRE;
+import static com.github.mnadeem.wishing.Constants.DEFAULT_FROM_EMAIL_ADDRESS;
+import static com.github.mnadeem.wishing.Constants.EXTENSION_JPG;
+import static com.github.mnadeem.wishing.Constants.PROPERTY_NAME_ANNIVERSARY_DEFAULT_IMAGE_COUNT;
+import static com.github.mnadeem.wishing.Constants.PROPERTY_NAME_ANNIVERSARY_YEARS_COUNT;
+import static com.github.mnadeem.wishing.Constants.PROPERTY_NAME_BELATED_PREFIX;
+import static com.github.mnadeem.wishing.Constants.PROPERTY_NAME_BIRTHDAY_IMAGE_COUNT;
+import static com.github.mnadeem.wishing.Constants.PROPERTY_NAME_IMAGE_BASE_PATH;
+import static com.github.mnadeem.wishing.Constants.PROPERTY_NAME_IMAGE_EXTENSION;
+import static com.github.mnadeem.wishing.Constants.PROPERTY_NAME_MAIL_EXPIRE_AFTER_DAYS;
+
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -17,8 +28,6 @@ import com.github.mnadeem.wishing.service.EmailService;
 import com.github.mnadeem.wishing.service.WishingDataService;
 import com.github.mnadeem.wishing.service.data.Mail;
 import com.github.mnadeem.wishing.service.data.Wish;
-
-import static com.github.mnadeem.wishing.Constants.*;
 
 @Component
 public class DefaultWishingJob implements WishingJob {
@@ -44,10 +53,10 @@ public class DefaultWishingJob implements WishingJob {
 		logger.debug("Job finished for {}, processed {} wish(es)", date, wishCount);
 	}
 
-	private void sendEmail(Wish wish) {
+	private void sendEmail(Wish wish, LocalDate date) {
 		if (wish.shouldWish() && isEnabled(wish)) {
 			try {				
-				Mail buildMail = buildMail(wish);
+				Mail buildMail = buildMail(wish, date);
 				this.emailService.send(buildMail);
 			} catch (MessagingException e) {
 				logger.error("Error Sending message", e);
@@ -72,13 +81,13 @@ public class DefaultWishingJob implements WishingJob {
 		return env.<Boolean>getProperty(key.toString(), Boolean.class, Boolean.TRUE);
 	}
 
-	private Mail buildMail(Wish wish) {
+	private Mail buildMail(Wish wish, LocalDate date) {
 		String from = env.<String>getProperty("app.name" + wish.getPartition() + ".from", String.class, DEFAULT_FROM_EMAIL_ADDRESS);
 		String cc = env.<String>getProperty("app.name" + wish.getPartition() + ".cc", String.class, "");
 		Mail mail = new Mail();
 		mail.setTo(wish.getEmail());
 		mail.setFrom(from);
-		mail.setSubject(buildSubject(wish));
+		mail.setSubject(buildSubject(wish, date));
 		mail.setContent(buildContent(wish));
 		mail.setImage(buildImage(wish));
 		mail.setCc(cc);
@@ -137,9 +146,9 @@ public class DefaultWishingJob implements WishingJob {
 		return "";
 	}
 
-	private String buildSubject(Wish wish) {
+	private String buildSubject(Wish wish, LocalDate date) {
 		StringBuilder subject = new StringBuilder();
-		subject.append(wish.getWish()).append(" ").append(wish.getName());
+		subject.append(belatedPrefix(date)).append(wish.getWish()).append(" ").append(wish.getName());
 		if (wish.isBirthday()) {
 			subject.append("!");
 		} else {
@@ -147,6 +156,13 @@ public class DefaultWishingJob implements WishingJob {
 		}
 
 		return subject.toString();
+	}
+
+	private String belatedPrefix(LocalDate date) {
+		if (date.isBefore(LocalDate.now())) {
+			return env.<String>getProperty(PROPERTY_NAME_BELATED_PREFIX, String.class, "");
+		}
+		return "";
 	}
 
 	private String getImageExtension() {

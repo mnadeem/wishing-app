@@ -1,7 +1,7 @@
 package com.github.mnadeem.wishing.service;
 
 import java.time.LocalDate;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 import com.github.mnadeem.wishing.service.data.Wish;
 import com.github.mnadeem.wishing.service.support.WishData;
@@ -9,5 +9,5 @@ import com.github.mnadeem.wishing.service.support.WishData;
 public interface WishingDataService {
 
 	void add(WishData wish);	
-	int forEach(LocalDate date, Consumer<Wish> wish);
+	int forEach(LocalDate date, BiConsumer<Wish, LocalDate> wish);
 }

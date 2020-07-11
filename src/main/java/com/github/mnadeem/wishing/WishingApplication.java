@@ -116,9 +116,10 @@ public class WishingApplication implements CommandLineRunner {
 	private void addBelatedDate(Set<LocalDate> result, String belatedDateFormat, Integer belatedMaxBackDays,
 			String dateStr) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(belatedDateFormat);
-		LocalDate date = LocalDate.parse(dateStr.trim(), formatter);
-		if (!(ChronoUnit.DAYS.between(date, LocalDate.now().plusDays(1)) > belatedMaxBackDays)) {
-			result.add(date);
+		LocalDate belatedDate = LocalDate.parse(dateStr.trim(), formatter);
+		LocalDate tomorrow = LocalDate.now().plusDays(1);
+		if (belatedDate.isBefore(tomorrow) && !(ChronoUnit.DAYS.between(belatedDate, tomorrow) > belatedMaxBackDays)) {
+			result.add(belatedDate);
 		} else {
 			logger.info("Skipped {}, as it is beyond {} days ", dateStr, belatedMaxBackDays);
 		}
