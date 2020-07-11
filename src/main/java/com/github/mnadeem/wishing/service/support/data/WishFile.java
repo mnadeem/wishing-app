@@ -103,8 +103,7 @@ public class WishFile {
 	public String toString() {
 		return "WishFile [fileName=" + fileName + ", nameIndex=" + nameIndex + ", emailIndex=" + emailIndex
 				+ ", dobIndex=" + dobIndex + ", hireIndex=" + hireIndex + ", sheetNumber=" + sheetNumber
-				+ ", workbookNumber=" + workbookNumber + ", dobFormatter=" + dobFormatter + ", hireFormatter="
-				+ hireFormatter + "]";
+				+ ", workbookNumber=" + workbookNumber + "]";
 	}
 
 }
