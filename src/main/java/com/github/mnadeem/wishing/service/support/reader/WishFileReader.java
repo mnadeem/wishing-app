@@ -1,6 +1,9 @@
-package com.github.mnadeem.wishing.service.support;
+package com.github.mnadeem.wishing.service.support.reader;
 
 import java.util.function.Consumer;
+
+import com.github.mnadeem.wishing.service.support.data.WishData;
+import com.github.mnadeem.wishing.service.support.data.WishFile;
 
 /**
  * 

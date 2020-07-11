@@ -1,4 +1,4 @@
-package com.github.mnadeem.wishing.service.support;
+package com.github.mnadeem.wishing.service.support.reader;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,6 +12,9 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.github.mnadeem.wishing.service.support.data.WishData;
+import com.github.mnadeem.wishing.service.support.data.WishFile;
 
 /**
  * 

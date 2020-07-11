@@ -1,7 +1,7 @@
 package com.github.mnadeem.wishing.service;
 
-import static com.github.mnadeem.wishing.Constants.PROPERTY_NAME_WISH_FILES_COUNT;
 import static com.github.mnadeem.wishing.Constants.PROPERTY_NAME_STOP_ON_LOAD_ERROR;
+import static com.github.mnadeem.wishing.Constants.PROPERTY_NAME_WISH_FILES_COUNT;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -23,11 +23,11 @@ import org.springframework.util.StringUtils;
 
 import com.github.mnadeem.wishing.service.data.Wish;
 import com.github.mnadeem.wishing.service.data.Wish.WishKey;
-import com.github.mnadeem.wishing.service.support.WishFile;
-import com.github.mnadeem.wishing.service.support.WishFileReadError;
-import com.github.mnadeem.wishing.service.support.WishFilesReader;
-import com.github.mnadeem.wishing.service.support.WishFiles;
-import com.github.mnadeem.wishing.service.support.WishData;
+import com.github.mnadeem.wishing.service.support.data.WishData;
+import com.github.mnadeem.wishing.service.support.data.WishFile;
+import com.github.mnadeem.wishing.service.support.data.WishFiles;
+import com.github.mnadeem.wishing.service.support.reader.WishFileReadError;
+import com.github.mnadeem.wishing.service.support.reader.WishFilesReader;
 
 /**
  * 

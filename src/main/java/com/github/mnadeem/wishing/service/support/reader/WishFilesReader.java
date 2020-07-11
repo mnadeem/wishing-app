@@ -1,10 +1,14 @@
-package com.github.mnadeem.wishing.service.support;
+package com.github.mnadeem.wishing.service.support.reader;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.function.Consumer;
 
 import org.springframework.core.io.ResourceLoader;
+
+import com.github.mnadeem.wishing.service.support.data.WishData;
+import com.github.mnadeem.wishing.service.support.data.WishFile;
+import com.github.mnadeem.wishing.service.support.data.WishFiles;
 
 /**
  * 

@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.function.BiConsumer;
 
 import com.github.mnadeem.wishing.service.data.Wish;
-import com.github.mnadeem.wishing.service.support.WishData;
+import com.github.mnadeem.wishing.service.support.data.WishData;
 
 /**
  * 

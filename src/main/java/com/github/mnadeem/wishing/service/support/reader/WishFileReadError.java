@@ -1,4 +1,4 @@
-package com.github.mnadeem.wishing.service.support;
+package com.github.mnadeem.wishing.service.support.reader;
 
 /**
  * 
