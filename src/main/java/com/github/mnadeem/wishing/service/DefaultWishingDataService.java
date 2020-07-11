@@ -77,13 +77,18 @@ public class DefaultWishingDataService implements WishingDataService {
 		Integer nameIndex = env.<Integer>getProperty("app.name" + i + ".column", Integer.class);
 		Integer emailIndex = env.<Integer>getProperty("app.email" + i + ".column", Integer.class);
 		Integer dobIndex = env.<Integer>getProperty("app.dob" + i + ".column", Integer.class);
+		String dobFormat = env.<String>getProperty("app.dob" + i + ".date_format", String.class, "yyyy-MM-dd");
 		Integer hireIndex = env.<Integer>getProperty("app.hire" + i + ".column", Integer.class);
+		String hireFormat = env.<String>getProperty("app.hire" + i + ".date_format", String.class, "yyyy-MM-dd");
 		Integer sheetNumber = env.<Integer>getProperty("app.number" + i + ".excel_sheet", Integer.class, 1);
 
 		WishFile file = new WishFile();
 		file.setFileName(fileName);
 		file.setNameIndex(nameIndex - 1);
 		file.setEmailIndex(emailIndex - 1);
+		file.setDobFormat(dobFormat);
+		file.setHireFormat(hireFormat);
+
 		if (dobIndex !=null) {			
 			file.setDobIndex(dobIndex - 1);
 		}

@@ -1,5 +1,7 @@
 package com.github.mnadeem.wishing.service.support;
 
+import java.time.format.DateTimeFormatter;
+
 public class WishFile {
 
 	private String fileName;
@@ -9,6 +11,8 @@ public class WishFile {
 	private Integer hireIndex;
 	private int sheetNumber;
 	private int workbookNumber;
+	private DateTimeFormatter dobFormatter;
+	private DateTimeFormatter hireFormatter;
 	
 	public boolean isCsv() {
 		return fileName != null && fileName.trim().toLowerCase().endsWith(".csv");
@@ -72,6 +76,22 @@ public class WishFile {
 
 	public void setWorkbookNumber(int workbookNumber) {
 		this.workbookNumber = workbookNumber;
+	}
+
+	public void setDobFormat(String dobFormat) {
+		this.dobFormatter = DateTimeFormatter.ofPattern(dobFormat);
+	}
+	
+	public DateTimeFormatter getDobFormatter() {
+		return this.dobFormatter;
+	}
+
+	public void setHireFormat(String hireFormat) {
+		this.hireFormatter = DateTimeFormatter.ofPattern(hireFormat);
+	}
+	
+	public DateTimeFormatter getHireFormatter() {
+		return this.hireFormatter;
 	}
 
 	@Override
