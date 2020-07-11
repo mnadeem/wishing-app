@@ -7,6 +7,7 @@ Refer **[Project Wiki](https://github.com/mnadeem/wishing-app/wiki)** for more D
 
 | Stable Release Version | JDK Version compatibility | Release Date |
 | ------------- | ------------- | ------------|
+| 2.1.0  | 1.8+ | 07/12/2020 |
 | 2.0.0  | 1.8+ | 06/08/2020 |
 
 
@@ -15,6 +16,7 @@ Refer **[Project Wiki](https://github.com/mnadeem/wishing-app/wiki)** for more D
 Dexecutor is licensed under **Apache Software License, Version 2.0**.
 
 ## News
+* Version **2.1.0** released on 07/12/2020, supporting csv files as well.
 * Version **2.0.0** released on 06/08/2020.
 
 
