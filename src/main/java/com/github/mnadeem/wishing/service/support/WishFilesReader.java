@@ -1,16 +1,13 @@
 package com.github.mnadeem.wishing.service.support;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.function.Consumer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ResourceLoader;
 
 public class WishFilesReader {
-	
-	private static Logger logger = LoggerFactory.getLogger(WishFilesReader.class);
-	
+
 	private final WishFiles wishFiles;
 	private final ResourceLoader resourceLoader;
 	private final Boolean stopOnLoadError;
@@ -26,14 +23,25 @@ public class WishFilesReader {
 	}
 
 	private void readRows(WishFile wishFile, Consumer<WishData> consumer) {
-		try {
-			getWishFileReader(wishFile).readRows(wishFile, consumer);
-		} catch (IOException e) {
-			logger.error("Error Reading file : " + wishFile, e);
-		}
+		getWishFileReader(wishFile).readRows(wishFile, consumer);
 	}
 
-	private WishFileReader getWishFileReader(WishFile wishFile) throws IOException {
-		return new ExceWishFileReader(stopOnLoadError, resourceLoader.getResource(wishFile.getFileName()).getInputStream());
+	private WishFileReader getWishFileReader(WishFile wishFile) {
+		InputStream stream;
+		try {
+			stream = resourceLoader.getResource(wishFile.getFileName()).getInputStream();
+		} catch (IOException e) {
+			throw new WishFileReadError("Can read file : " + wishFile);
+		}
+
+		WishFileReader wishFileReader = null;
+		if (wishFile.isCsv()) {
+			wishFileReader = new CsvWishFileReader(stopOnLoadError, stream);
+		} else if(wishFile.isXlsx()) {
+			wishFileReader = new ExceWishFileReader(stopOnLoadError, stream);
+		} else {
+			throw new IllegalArgumentException("Invalid Wish file");
+		}
+		return wishFileReader;
 	}
 }

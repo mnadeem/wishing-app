@@ -9,6 +9,14 @@ public class WishFile {
 	private Integer hireIndex;
 	private int sheetNumber;
 	private int workbookNumber;
+	
+	public boolean isCsv() {
+		return fileName != null && fileName.trim().toLowerCase().endsWith(".csv");
+	}
+	
+	public boolean isXlsx() {
+		return fileName != null && fileName.trim().toLowerCase().endsWith(".xlsx");
+	}
 
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
