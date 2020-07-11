@@ -20,15 +20,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.util.StringUtils;
 
-public class WishFileReader {
+public class WishFilesReader {
 
-	private static Logger logger = LoggerFactory.getLogger(WishFileReader.class);
+	private static Logger logger = LoggerFactory.getLogger(WishFilesReader.class);
 
 	private final WishFiles wishFiles;
 	private final ResourceLoader resourceLoader;
 	private final Boolean stopOnLoadError;
 
-	public WishFileReader(Boolean stopOnLoadError, ResourceLoader resourceLoader, WishFiles wishFiles) {
+	public WishFilesReader(Boolean stopOnLoadError, ResourceLoader resourceLoader, WishFiles wishFiles) {
 		this.stopOnLoadError = stopOnLoadError;
 		this.wishFiles = wishFiles;
 		this.resourceLoader = resourceLoader;

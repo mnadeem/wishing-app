@@ -25,7 +25,7 @@ import com.github.mnadeem.wishing.service.data.Wish;
 import com.github.mnadeem.wishing.service.data.Wish.WishKey;
 import com.github.mnadeem.wishing.service.support.WishFile;
 import com.github.mnadeem.wishing.service.support.WishFileReadError;
-import com.github.mnadeem.wishing.service.support.WishFileReader;
+import com.github.mnadeem.wishing.service.support.WishFilesReader;
 import com.github.mnadeem.wishing.service.support.WishFiles;
 import com.github.mnadeem.wishing.service.support.WishData;
 
@@ -46,7 +46,7 @@ public class DefaultWishingDataService implements WishingDataService {
 		Boolean stopOnLoadError = env.<Boolean>getProperty(PROPERTY_NAME_STOP_ON_LOAD_ERROR, Boolean.class, Boolean.FALSE);
 		logger.trace("Stop on load error : {} ", stopOnLoadError);
 
-		new WishFileReader(stopOnLoadError, resourceLoader, buildWishFiles()).forEach(wishData -> add(wishData));
+		new WishFilesReader(stopOnLoadError, resourceLoader, buildWishFiles()).forEach(wishData -> add(wishData));
 		logger.debug("Total Wishes {} ", cache.size());
 		if (logger.isTraceEnabled()) {			
 			for (WishKey key : cache.keySet()) {
