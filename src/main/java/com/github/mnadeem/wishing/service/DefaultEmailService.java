@@ -16,6 +16,11 @@ import org.springframework.stereotype.Service;
 
 import com.github.mnadeem.wishing.service.data.Mail;
 
+/**
+ * 
+ * @author Mohammad Nadeem (coolmind182006@gmail.com)
+ *
+ */
 @Service
 public class DefaultEmailService implements EmailService {
 

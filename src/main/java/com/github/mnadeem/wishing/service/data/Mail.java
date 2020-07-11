@@ -4,6 +4,11 @@ import java.util.Arrays;
 
 import org.springframework.util.StringUtils;
 
+/**
+ * 
+ * @author Mohammad Nadeem (coolmind182006@gmail.com)
+ *
+ */
 public class Mail {
 
     private String from;

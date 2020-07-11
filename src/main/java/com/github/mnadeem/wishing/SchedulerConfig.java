@@ -18,6 +18,11 @@ import static com.github.mnadeem.wishing.Constants.*;
 
 import com.github.mnadeem.wishing.job.WishingJob;
 
+/**
+ * 
+ * @author Mohammad Nadeem (coolmind182006@gmail.com)
+ *
+ */
 @Configuration
 public class SchedulerConfig implements SchedulingConfigurer {
 	

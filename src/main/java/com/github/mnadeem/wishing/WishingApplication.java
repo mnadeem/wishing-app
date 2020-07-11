@@ -31,6 +31,11 @@ import org.springframework.util.StringUtils;
 import com.github.mnadeem.wishing.function.ThrowingConsumer;
 import com.github.mnadeem.wishing.job.WishingJob;
 
+/**
+ * 
+ * @author Mohammad Nadeem (coolmind182006@gmail.com)
+ *
+ */
 @EnableScheduling
 @EnableAsync
 @SpringBootApplication

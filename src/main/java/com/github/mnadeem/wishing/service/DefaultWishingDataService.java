@@ -29,6 +29,11 @@ import com.github.mnadeem.wishing.service.support.WishFilesReader;
 import com.github.mnadeem.wishing.service.support.WishFiles;
 import com.github.mnadeem.wishing.service.support.WishData;
 
+/**
+ * 
+ * @author Mohammad Nadeem (coolmind182006@gmail.com)
+ *
+ */
 @Service
 public class DefaultWishingDataService implements WishingDataService {
 

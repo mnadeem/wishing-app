@@ -1,5 +1,10 @@
 package com.github.mnadeem.wishing;
 
+/**
+ * 
+ * @author Mohammad Nadeem (coolmind182006@gmail.com)
+ *
+ */
 public final class Constants {
 	
 	public static final String PROPERTY_NAME_SCHEDULE_EXTERNALLY_MANAGED = "app.schedule.externally_managed";

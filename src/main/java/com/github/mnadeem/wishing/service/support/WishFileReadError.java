@@ -1,5 +1,10 @@
 package com.github.mnadeem.wishing.service.support;
 
+/**
+ * 
+ * @author Mohammad Nadeem (coolmind182006@gmail.com)
+ *
+ */
 public class WishFileReadError extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;

@@ -18,6 +18,11 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 
+ * @author Mohammad Nadeem (coolmind182006@gmail.com)
+ *
+ */
 public class ExceWishFileReader extends BaseFileReader {
 
 	private static Logger logger = LoggerFactory.getLogger(ExceWishFileReader.class);

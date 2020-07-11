@@ -6,6 +6,11 @@ import java.util.function.Consumer;
 
 import org.springframework.core.io.ResourceLoader;
 
+/**
+ * 
+ * @author Mohammad Nadeem (coolmind182006@gmail.com)
+ *
+ */
 public class WishFilesReader {
 
 	private final WishFiles wishFiles;

@@ -2,6 +2,11 @@ package com.github.mnadeem.wishing.function;
 
 import java.util.function.Consumer;
 
+/**
+ * 
+ * @author Mohammad Nadeem (coolmind182006@gmail.com)
+ *
+ */
 @FunctionalInterface
 public interface ThrowingConsumer<T> extends Consumer<T> {
 

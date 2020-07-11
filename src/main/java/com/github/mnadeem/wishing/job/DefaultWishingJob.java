@@ -29,6 +29,11 @@ import com.github.mnadeem.wishing.service.WishingDataService;
 import com.github.mnadeem.wishing.service.data.Mail;
 import com.github.mnadeem.wishing.service.data.Wish;
 
+/**
+ * 
+ * @author Mohammad Nadeem (coolmind182006@gmail.com)
+ *
+ */
 @Component
 public class DefaultWishingJob implements WishingJob {
 

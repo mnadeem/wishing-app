@@ -8,7 +8,11 @@ import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import static com.github.mnadeem.wishing.Constants.*;
-
+/**
+ * 
+ * @author Mohammad Nadeem (coolmind182006@gmail.com)
+ *
+ */
 @Configuration
 public class WishingConfiguration {
 

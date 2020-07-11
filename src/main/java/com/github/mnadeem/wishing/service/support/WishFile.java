@@ -2,6 +2,11 @@ package com.github.mnadeem.wishing.service.support;
 
 import java.time.format.DateTimeFormatter;
 
+/**
+ * 
+ * @author Mohammad Nadeem (coolmind182006@gmail.com)
+ *
+ */
 public class WishFile {
 
 	private String fileName;

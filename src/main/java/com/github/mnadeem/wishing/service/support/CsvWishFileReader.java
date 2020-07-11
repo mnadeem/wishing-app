@@ -13,6 +13,11 @@ import org.apache.commons.csv.CSVRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 
+ * @author Mohammad Nadeem (coolmind182006@gmail.com)
+ *
+ */
 public class CsvWishFileReader extends BaseFileReader {
 
 	private static Logger logger = LoggerFactory.getLogger(CsvWishFileReader.class);

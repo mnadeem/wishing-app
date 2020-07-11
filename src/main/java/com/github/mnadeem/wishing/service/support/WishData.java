@@ -2,6 +2,11 @@ package com.github.mnadeem.wishing.service.support;
 
 import java.time.LocalDate;
 
+/**
+ * 
+ * @author Mohammad Nadeem (coolmind182006@gmail.com)
+ *
+ */
 public class WishData {
 	
 	private LocalDate hireDate;

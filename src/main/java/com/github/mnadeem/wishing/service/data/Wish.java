@@ -3,6 +3,11 @@ package com.github.mnadeem.wishing.service.data;
 import java.time.LocalDate;
 import java.time.Period;
 
+/**
+ * 
+ * @author Mohammad Nadeem (coolmind182006@gmail.com)
+ *
+ */
 public class Wish  {
 	private String name;
 	private String email;

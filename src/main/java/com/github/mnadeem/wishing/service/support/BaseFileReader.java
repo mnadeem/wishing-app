@@ -6,6 +6,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
+/**
+ * 
+ * @author Mohammad Nadeem (coolmind182006@gmail.com)
+ *
+ */
 public abstract class BaseFileReader implements WishFileReader {
 
 	private static Logger logger = LoggerFactory.getLogger(BaseFileReader.class);
