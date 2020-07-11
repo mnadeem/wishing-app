@@ -66,11 +66,18 @@ public class CsvWishFileReader extends BaseFileReader {
 	}
 
 	private void extractAndsetDate(CSVRecord record, String column, WishFile wishFile, Integer cellIndex, DateTimeFormatter formatter, Consumer<LocalDate> dateConsumer) {
-		if (cellIndex != null) {
-			dateConsumer.accept(LocalDate.parse(record.get(cellIndex), formatter));
-		} else {
-			if (logger.isTraceEnabled()) {
-				logger.trace(column + " column not specified for {} : {}", wishFile, record);
+		try {
+			if (cellIndex != null) {
+				dateConsumer.accept(LocalDate.parse(record.get(cellIndex), formatter));
+			} else {
+				if (logger.isTraceEnabled()) {
+					logger.trace(column + " column not specified for {} : {}", wishFile, record);
+				}
+			}
+		} catch (Exception e) {
+			logger.error("Error Reading column " + column + " of wish file " + wishFile + " Row number " + record.getRecordNumber(), e);
+			if (stopOnLoadError) {
+				throw new WishFileReadError(e.getMessage(), e);
 			}
 		}
 	}
