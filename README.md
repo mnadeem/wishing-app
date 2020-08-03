@@ -13,7 +13,7 @@ Refer **[Project Wiki](https://github.com/mnadeem/wishing-app/wiki)** for more D
 
 ## License
 
-Dexecutor is licensed under **Apache Software License, Version 2.0**.
+Wishing-app is licensed under **Apache Software License, Version 2.0**.
 
 ## News
 * Version **2.1.0** released on 07/12/2020, supporting csv files as well.
